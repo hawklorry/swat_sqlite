@@ -347,15 +347,12 @@
         !! compute phosphorus movement
         call solp
 
-        !! compute chl-a, CBOD and dissolved oxygen loadings
-        call subwq
-
         !! compute bacteria transport
         call bacteria
 
         !! compute loadings from urban areas
         if (urblu(j) > 0) then
-	     if(ievent<3) then
+	     if(ievent == 0) then
 	        call urban ! daily simulation
 	     else
 		     call urbanhr ! subdaily simulation J.Jeong 4/20/2009
@@ -365,7 +362,7 @@
 !! Srini Pothole
         !! compute undrained depression/impounded area (eg rice) processes
 !        if (pot_fr(j) > 0.) then
-!           if (ievent<3) then   
+!           if (ievent == 0) then   
 !          call pothole
 !           else
 !              call potholehr
@@ -406,9 +403,9 @@
         end if
 
 	 !! compute reduction in pollutants due to in fixed BMP eff
-	   if (bmp_flag(j) == 1) then
-          call bmpfixed
-        end if
+	 !  if (bmp_flag(j) == 1) then
+       !   call bmpfixed
+       ! end if
 
 
         !! compute water yield for HRU
@@ -420,11 +417,14 @@
           qdfr = 0.
         end if
 
+        !! compute chl-a, CBOD and dissolved oxygen loadings
+        call subwq
+
         !! compute wetland processes
         call wetlan
 
         !! compute pond processes
-        if (ievent<3) then
+        if (ievent == 0) then
            call hrupond
         else
            call hrupondhr

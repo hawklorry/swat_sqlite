@@ -18,10 +18,8 @@
 !!                               |precipitation data for sub-daily modeling
 !!    ievent      |none          |rainfall/runoff code
 !!                               |0 daily rainfall/curve number technique
-!!                               |1 daily rainfall/Green&Ampt technique/daily
+!!                               |1 sub-daily rainfall/Green&Ampt/hourly
 !!                               |  routing
-!!                               |2 sub-daily rainfall/Green&Ampt technique/
-!!                               |  daily routing
 !!                               |3 sub-daily rainfall/Green&Ampt/hourly routing
 !!    igen        |none          |random number generator seed code
 !!    isproj      |none          |special project code:
@@ -65,7 +63,7 @@
       select case (pcpsim)
         case (1)
           write (24,1061)
-          if (ievent > 1) then
+          if (ievent > 0) then
             write (24,1062) idt
           else
             write (24,1063)
@@ -97,10 +95,6 @@
         case (0)
           write (24,1091)
         case (1)
-          write (24,1092)
-        case (2)
-          write (24,1093)
-        case (3)
           write (24,1094)
       end select
       select case (irte)
@@ -176,7 +170,7 @@
      &i14)
  1060 format (/t10,'Precipitation data used in run:')
  1061 format (t11,'Multiple gages read for watershed')
- 1062 format (t14,'Subdaily rainfall data used, summarized every ',i2,  
+ 1062 format (t14,'Subdaily rainfall data used, summarized every ',i3,  
      &       'min')
  1063 format (t14,'Daily rainfall data used')
  1064 format (t11,'Multiple gages simulated for watershed')
@@ -190,10 +184,6 @@
  1090 format (/t10,'Rainfall/Runoff/Routing Option:')
  1091 format (t11,'Daily rainfall data',/t11,'Runoff estimated with ',  
      &        'curve number method',/t11,'Daily stream routing')
- 1092 format (t11,'Daily rainfall data',/t11,'Runoff estimated with ',  
-     &        'Green & Ampt method',/t11,'Daily stream routing')
- 1093 format (t11,'Subdaily rainfall data',/t11,'Runoff estimated with',
-     &        ' Green & Ampt method',/t11,'Daily stream routing')
  1094 format (t11,'Subdaily rainfall data',/t11,'Runoff estimated with',
      &        ' Green & Ampt method',/t11,'Hourly stream routing')
  1095 format (t12,'Variable Storage routing method')

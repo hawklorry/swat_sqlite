@@ -8,14 +8,11 @@
 !!    name         |units         |definition
 !!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 !!    hhvaroute(:,:)|varies       |hourly routing storage array
-!!    ievent       |none          |rainfall/runoff code
-!!                                |0 daily rainfall/curve number technique
-!!                                |1 daily rainfall/Green&Ampt technique/daily
-!!                                |  routing
-!!                                |2 sub-daily rainfall/Green&Ampt technique/
-!!                                |  daily routing
-!!                                |3 sub-daily rainfall/Green&Ampt/hourly
-!!                                |  routing
+!!    ievent      |none          |rainfall/runoff code
+!!                               |0 daily rainfall/curve number technique
+!!                               |1 sub-daily rainfall/Green&Ampt/hourly
+!!                               |  routing
+!!                               |3 sub-daily rainfall/Green&Ampt/hourly routing
 !!    ihout        |none          |hydrograph storage location number for
 !!                                |output
 !!    mvaro        |none          |max number of variables routed through the
@@ -102,7 +99,7 @@
         end if
 
 !! subdaily array
-      if (ievent > 2) then
+      if (ievent > 0) then
         do ii = 1, nstep
           do jj = 1, mvaro
             hhvaroute(jj,ihout,ii) = hhvaroute(jj,inum1,ii) 
