@@ -58,7 +58,8 @@
  1000 format(1x,"               SWAT2012               ",/,             
      &          "               Rev. 627              ",/,             
      &          "      Soil & Water Assessment Tool    ",/,             
-     &          "               PC Version             ",/,             
+     &          "               PC Version             ",/,
+     &          "        SWAT_SQLite, Zhiqiang YU      ",/,
      &          " Program reading from file.cio . . . executing",/)
 
 !! process input
@@ -80,9 +81,16 @@
       call readatmodep
       call readinpt
       call std1
-      call std2
+      !!call std2
       call openwth
-      call headout
+      !!~ ~ ~ SQLITE ~ ~ ~
+      if(ioutput == 1) then
+        call headoutsqlite
+      else
+        call headout
+      end if
+      call std2
+      !!~ ~ ~ SQLITE ~ ~ ~
 
       !! convert integer to string for output.mgt file
       subnum = ""
@@ -121,6 +129,11 @@
         !!reinitialize for new scenario
         if (scenario > iscen) call rewind_init
       end do
+
+      !!~ ~ ~ SQLite ~ ~ ~
+      call sqlite_finalize
+      !!~ ~ ~ SQLite ~ ~ ~
+
          end if
       do i = 101, 109       !Claire 12/2/09: change 1, 9  to 101, 109.
         close (i)

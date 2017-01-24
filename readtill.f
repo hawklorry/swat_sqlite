@@ -49,6 +49,8 @@
 
 	j= ihru
 
+      call outprocess("readtill")
+
       do 
         dtil = 0.
         emix = 0.

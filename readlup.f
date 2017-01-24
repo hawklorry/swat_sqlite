@@ -33,6 +33,8 @@
       character*13 fnam
       integer :: eof
 
+      call outprocess("readlup")
+
 !!    read lup file     
       do               
        read (122,100,iostat=eof) no_up, mo, iday, iyear, fnam 

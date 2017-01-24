@@ -409,10 +409,16 @@
             end if 
           end select
            if (imgt == 1) then
+             !!~ ~ ~ SQLite ~ ~ ~
+            if(ioutput == 1) then
+                call mgt_sqlite(17,j)
+            else
             write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida, 
      *       cpnm(idplt(j)),"START-DORM", phubase(j), phuacc(j), 
      *       sol_sw(j),bio_ms(j), sol_rsd(1,j), sol_sumno3(j),
      *       sol_sumsolp(j)
+            end if
+            !!~ ~ ~ SQLite ~ ~ ~
            end if
            
           end if
@@ -435,10 +441,16 @@
             end select
             
             if (imgt == 1) then
+            !!~ ~ ~ SQLite ~ ~ ~
+            if(ioutput == 1) then
+                call mgt_sqlite(18,j)
+            else
                  write (143,1000) subnum(j), hruno(j), iyr, i_mo, iida, 
      *       cpnm(idplt(j)), "END-DORM", phubase(j), phuacc(j), 
      *       sol_sw(j), bio_ms(j), sol_rsd(1,j), sol_sumno3(j),
      *       sol_sumsolp(j)
+            end if
+            !!~ ~ ~ SQLite ~ ~ ~
             end if
 
         end if

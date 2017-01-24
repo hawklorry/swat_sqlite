@@ -64,6 +64,8 @@
       motot = 600             !! (50 years limit)
       
       allocate (surlag(mhru))
+      call outprocess("allocate_parms")
+
 !!!!!!!!!! drains
       allocate (wnan(mlyr))
 

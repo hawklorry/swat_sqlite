@@ -123,7 +123,7 @@
 
        if (sedin < 1.e-6) sedin = 0.
        !! initialize reach peak runoff rate
-       peakr = prf(ii) * hsdti(ii)
+       peakr = prf(jrch) * hsdti(ii)
 
        !! calculate flow velocity
        vc = 0.

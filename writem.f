@@ -235,6 +235,31 @@
         if (iprint /= 2 .and. curyr > nyskip) then
 
           !! monthly write--output.std
+          !!~~~ SQLite ~~~
+          if(ioutput == 1) then
+            call sqlite3_set_column(colwshd_mn(1),iyr)
+            call sqlite3_set_column(colwshd_mn(2),mo_chk)
+            call sqlite3_set_column(colwshd_mn(3),wshdmono(1))
+            call sqlite3_set_column(colwshd_mn(4),wshdmono(3))
+            call sqlite3_set_column(colwshd_mn(5),wshdmono(4))
+            call sqlite3_set_column(colwshd_mn(6),wshdmono(104))
+            call sqlite3_set_column(colwshd_mn(7),wshdmono(5))
+            call sqlite3_set_column(colwshd_mn(8),wshdmono(109))
+            call sqlite3_set_column(colwshd_mn(9),wshdmono(35))
+            call sqlite3_set_column(colwshd_mn(10),wshdmono(7))
+            call sqlite3_set_column(colwshd_mn(11),wshdmono(108))
+            call sqlite3_set_column(colwshd_mn(12),wshdmono(6))
+            call sqlite3_set_column(colwshd_mn(13),wshdmono(12))
+            call sqlite3_set_column(colwshd_mn(14),wshdmono(42))
+            call sqlite3_set_column(colwshd_mn(15),wshdmono(45))
+            call sqlite3_set_column(colwshd_mn(16),wshdmono(46))
+            call sqlite3_set_column(colwshd_mn(17),wshdmono(44))
+            call sqlite3_set_column(colwshd_mn(18),wshdmono(40))
+            call sqlite3_set_column(colwshd_mn(19),wshdmono(43))
+            call sqlite3_set_column(colwshd_mn(20),wshdmono(41))
+            call sqlite3_set_column(colwshd_mn(21),wshdmono(111))
+            call sqlite3_insert( db, tblwshd_mn, colwshd_mn )
+          else
           if (iscen == 1) then
           write (26,6200) mo_chk, wshdmono(1), wshdmono(3), wshdmono(4),
      &            wshdmono(104), wshdmono(5), wshdmono(109),            
@@ -250,6 +275,8 @@
      &            wshdmono(46), wshdmono(44), wshdmono(40),             
      &            wshdmono(43), wshdmono(41), wshdmono(111)
           endif
+          endif
+          !!~~~ SQLite ~~~
 
           if (iprint == 0) then
             !! monthly write--pesticide output (output.pst) for HRUs
@@ -272,6 +299,61 @@
               if (iyr > iyres(j) .or.                                   
      &                  (mo_chk >= mores(j) .and. iyr == iyres(j))) then
                 if (iscen == 1 .and. isproj == 0) then
+                    if(ioutput == 1) then
+                    !!~~~ SQLite ~~~
+                call sqlite3_set_column( colrsv(1), res_sub(j) )
+                call sqlite3_set_column( colrsv(2), iyr )
+                call sqlite3_set_column( colrsv(3), mo_chk )
+
+                call sqlite3_set_column( colrsv(4), res_vol(j) )
+                call sqlite3_set_column( colrsv(5),
+     &                                  resoutm(1,j) / Real(idlast) )
+                call sqlite3_set_column( colrsv(6),
+     &                                  resoutm(2,j) / Real(idlast) )
+                call sqlite3_set_column( colrsv(7), resoutm(19,j) )
+                call sqlite3_set_column( colrsv(8), resoutm(17,j) )
+                call sqlite3_set_column( colrsv(9), resoutm(18,j) )
+                call sqlite3_set_column( colrsv(10), resoutm(3,j) )
+                call sqlite3_set_column( colrsv(11), resoutm(4,j) )
+                call sqlite3_set_column( colrsv(12),
+     &                                 resoutm(5,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(13), resoutm(22,j) )
+                call sqlite3_set_column( colrsv(14), resoutm(23,j) )
+                call sqlite3_set_column( colrsv(15),
+     &                                 resoutm(38,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(16), resoutm(24,j) )
+                call sqlite3_set_column( colrsv(17), resoutm(25,j) )
+                call sqlite3_set_column( colrsv(18),
+     &                                 resoutm(36,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(19), resoutm(26,j) )
+                call sqlite3_set_column( colrsv(20), resoutm(27,j) )
+                call sqlite3_set_column( colrsv(21),
+     &                                 resoutm(39,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(22), resoutm(28,j) )
+                call sqlite3_set_column( colrsv(23), resoutm(29,j) )
+                call sqlite3_set_column( colrsv(24),
+     &                                 resoutm(40,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(25), resoutm(30,j) )
+                call sqlite3_set_column( colrsv(26), resoutm(31,j) )
+                call sqlite3_set_column( colrsv(27),
+     &                                 resoutm(41,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(28), resoutm(32,j) )
+                call sqlite3_set_column( colrsv(29), resoutm(33,j) )
+                call sqlite3_set_column( colrsv(30),
+     &                                 resoutm(37,j) / Real(idlast))
+                call sqlite3_set_column( colrsv(31), resoutm(34,j) )
+                call sqlite3_set_column( colrsv(32), resoutm(35,j) )
+                call sqlite3_set_column( colrsv(33), res_seci(j) )
+                do k=6,14
+                    call sqlite3_set_column( colrsv(28+k), resouty(k,j))
+                end do
+                call sqlite3_set_column( colrsv(43),
+     &                                 resoutm(15,j) / Real(idlast) )
+                call sqlite3_set_column( colrsv(44),
+     &                                 resoutm(16,j) / Real(idlast) )
+                call sqlite3_insert_stmt( db, stmtrsv, colrsv )
+                !!~~~ SQLite ~~~
+                    else
                 write (8,5800) j, mo_chk, res_vol(j),                   
      &                      resoutm(1,j) / Real(idlast),                
      &                      resoutm(2,j) / Real(idlast),                
@@ -294,6 +376,7 @@
      &                      (resoutm(k,j), k = 6, 14),                  
      &                      resoutm(15,j) / Real(idlast),               
      &                      resoutm(16,j) / Real(idlast)
+                    end if
                 else if (isproj == 1) then
                 write (22,5800) j, mo_chk, res_vol(j),                  
      &                      resoutm(1,j) / Real(idlast),                
@@ -345,19 +428,38 @@
      
             end do
 
-            !! monthly write--HRU output (output.hru)
-            call hrumon
+            !!~~~ SQLite ~~~
+            if(ioutput == 1) then
+                 !! monthly write--HRU output (output.hru)
+                call hrumon_sqlite
 
-            call impndmon
+                 !!don't need separate subroutine
+                call impndmon
 
-            !! monthly write--subbasin output (output.sub)
-            call submon
+                !! monthly write--subbasin output (output.sub)
+                call submon_sqlite
 
-            !! monthly write--reach output (.rch)
-            if (idlast > 0) call rchmon(idlast)
+                !! monthly write--reach output (.rch)
+                if (idlast > 0) call rchmon_sqlite(idlast)
 
-            !! monthly write--sediment routing output (.sed)
-            if (idlast > 0) call rsedmon(idlast)
+                !! monthly write--sediment routing output (.sed)
+                if (idlast > 0) call rsedmon(idlast)
+            else
+                !! monthly write--HRU output (output.hru)
+                call hrumon
+
+                call impndmon
+
+                !! monthly write--subbasin output (output.sub)
+                call submon
+
+                !! monthly write--reach output (.rch)
+                if (idlast > 0) call rchmon(idlast)
+
+                !! monthly write--sediment routing output (.sed)
+                if (idlast > 0) call rsedmon(idlast)
+            end if
+            !!~~~ SQLite ~~~
 
           end if
 

@@ -67,6 +67,8 @@
       iunum = 0
       eof = 0
 
+      call outprocess("readurban")
+
       do 
         crbdn = 0.
         dtmx = 0.

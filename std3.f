@@ -20,17 +20,23 @@
       use parm
  
 !!    standard output file
-      if (iscen == 1) then
-        write (26,1000) prog
-        write (26,1100) title
-        write (26,1200) curyr
-        write (26,1300)
-      else if (isproj == 1) then
-        write (19,1000) prog
-        write (19,1100) title
-        write (19,1200) curyr
-        write (19,1300)
-      endif
+      !!~~~ SQLite ~~~
+      if(ioutput == 1) then
+        !!do nothing
+      else
+          if (iscen == 1) then
+            write (26,1000) prog
+            write (26,1100) title
+            write (26,1200) curyr
+            write (26,1300)
+          else if (isproj == 1) then
+            write (19,1000) prog
+            write (19,1100) title
+            write (19,1200) curyr
+            write (19,1300)
+          endif
+      end if
+      !!~~~ SQLite ~~~
 
       return
  1000 format ('1',/t5,a80,t105,2(a2,'/'),a2,5x,2(i2,':'),i2)

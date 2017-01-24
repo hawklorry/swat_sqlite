@@ -163,6 +163,7 @@
 
       eof = 0
 
+      call outprocess("readplant")
 
       do
 

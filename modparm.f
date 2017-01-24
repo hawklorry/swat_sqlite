@@ -1,4 +1,5 @@
       module parm
+      use sqlite
       integer icalen, prf_bsn
       
       real, dimension (:), allocatable :: alph_e
@@ -647,6 +648,27 @@
       character(len=13) :: heds(78),hedb(22),hedr(46),hedrsv(41)
 !!      character(len=13) :: heds(73),hedb(21),hedr(42),hedrsv(41)
       character(len=13) :: hedwtr(40)
+      !!~~~ SQLite ~~~
+      !!columns for reach sediment output
+      character(len=13) :: hedsed(19)
+      !!columns for potholes output
+      character(len=13) :: hedpot(9)
+      !!columns for ave annaul hru value
+      character(len=13) :: hedahu(18)
+      !!columns for monthly basin value
+      character(len=13) :: hedamo(8)
+      !!columns for watershed value
+      character(len=13) :: hedwshd(19)
+      !!columns for table mgt, output.mgt
+      character(len=13) :: hedmgt(29)
+      !!columns for table snu, output.snu, soil nutrient
+      character(len=13) :: hedsnu(6)
+      !!columns for table swr, output.swr, soil water
+      character(len=13) :: hedswr(10)
+      !!columns for table channel_dimension, chan.deg
+      !!record the change of channel dimension due to degradation
+      character(len=13) :: heddeg(3)
+      !!~~~ SQLite ~~~
 !     character(len=4) :: title(60), cpnm(250)
       character(len=4) :: title(60), cpnm(5000)
       character(len=17), dimension(50) :: fname
@@ -896,6 +918,91 @@
       ! tillage_factor: = 1.6 in 30 days after tillage practices occur; otherwise 1.0;
 !! By Zhang for C/N cycling
 
+      !!SQLite output
+        integer :: ioutput  !!output format
+                            !!0 = regular file format
+                            !!1 = SQLite format
+
+        type(SQLITE_DATABASE) :: db !!database
+
+        !!columns
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colrch
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colhru
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colsub
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colrsv
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colwtr
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colsed
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colpot
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colmgt
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colsnu
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colswr
+        type(SQLITE_COLUMN), dimension(:), allocatable :: coldeg
+
+        !!output.sed is separated into following tables
+        !!daily, monthly and yearly watershed value
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colwshd_dy
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colwshd_mn
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colwshd_yr
+
+        !!ave annual irrigation
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colair
+        !!ave annual crop yield and biomass
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colacp
+        !!ave annual hru
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colahu
+        !!monthly basin value
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colamo
+        !!ave annual basin value
+        type(SQLITE_COLUMN), dimension(:), allocatable :: colabn
+        
+        !!insert sqlite statments for better performance
+        !!only add this for some big tables
+        !!small tables will use the normal approach
+        type(SQLITE_STATEMENT)    :: stmtrch
+        type(SQLITE_STATEMENT)    :: stmthru
+        type(SQLITE_STATEMENT)    :: stmtsub
+        type(SQLITE_STATEMENT)    :: stmtrsv
+        type(SQLITE_STATEMENT)    :: stmtwtr
+        type(SQLITE_STATEMENT)    :: stmtsed
+        type(SQLITE_STATEMENT)    :: stmtpot
+        type(SQLITE_STATEMENT)    :: stmtmgt
+        type(SQLITE_STATEMENT)    :: stmtsnu
+        type(SQLITE_STATEMENT)    :: stmtswr
+
+        !!table name
+        character(len=3) :: tblrch
+        character(len=3) :: tblhru
+        character(len=3) :: tblsub
+        character(len=3) :: tblrsv
+        character(len=3) :: tblwtr
+        character(len=3) :: tblsed
+        character(len=3) :: tblpot
+        character(len=3) :: tblmgt
+        character(len=3) :: tblsnu
+        character(len=3) :: tblswr
+        character(len=30) :: tbldeg
+
+        character(len=30) :: tblwshd_dy
+        character(len=30) :: tblwshd_mn
+        character(len=30) :: tblwshd_yr
+
+        character(len=30) :: tblabn
 
 
+        !!number of basic information columns in each table
+        integer :: tblhru_num
+        integer :: tblrch_num
+        integer :: tblsub_num
+
+        !!number of date columns
+        !!yearly = 1, monthly = 2, daily = 3
+        integer :: datecol_num
+
+        !!create index after insert would speed up SQLiter performance
+        !!All indexs informatio would be saved in following variable temporarily
+        !!The indexs would be created after insert
+        character(len=50), dimension(100) :: sq_indexname
+        character(len=50), dimension(100) :: sq_tablename
+        character(len=50), dimension(100) :: sq_indexs
+        integer :: sq_indexnum
       end module parm

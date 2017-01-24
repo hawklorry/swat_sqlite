@@ -101,6 +101,8 @@
       real :: tir, wshd_snoe, volout, sedout, res3, res4, res17
       real :: res18, res19, res20, res21
 
+      call outprocess("finalbal")
+
 !! compute amount of irrigation water applied in watershed
       tir = 0.
       do j = 1, nhru

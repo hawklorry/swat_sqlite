@@ -45,6 +45,8 @@
       integer :: j, kk1, kk2, k
       character (len=80) :: titldum
 
+      call outprocess("openwth")
+
 !! open precip files and read elevation
       do j = 1, nrgage
         !! calculate gage id codes for first and last dataset in file

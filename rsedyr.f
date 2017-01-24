@@ -30,8 +30,21 @@
 
       do j = 1, subtot
           rchyro(58,j) = rchyro(58,j)/Real(idlast)
-          write (84,5000) j, subgis(j), iyr, rch_dakm(j),               
+          !!~ ~ ~ SQLITE ~ ~ ~
+          if(ioutput == 1) then
+            call sqlite3_set_column( colsed(1), j )
+            call sqlite3_set_column( colsed(2), iyr )
+            call sqlite3_set_column( colsed(3), rchyro(3,j) )
+            call sqlite3_set_column( colsed(4), rchyro(4,j) )
+            do ii = 42,58
+                call sqlite3_set_column( colsed(ii-37), rchyro(ii,j) )
+            end do
+            call sqlite3_insert_stmt( db, stmtsed, colsed )
+          else
+            write (84,5000) j, subgis(j), iyr, rch_dakm(j),
      &       rchyro(3,j), rchyro(4,j),(rchyro(ii,j),ii=42,58)
+          end if
+          !!~ ~ ~ SQLITE ~ ~ ~
       end do
 
       return

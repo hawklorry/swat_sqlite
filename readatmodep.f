@@ -33,6 +33,8 @@
   
       rcn_sub = rcn_sub_bsn
 
+      call outprocess("readatmodep")
+
 !!    Atmosperic deposition filename present in file.cio
       if (atmofile /= '             ') then
         open (127,file=atmofile)

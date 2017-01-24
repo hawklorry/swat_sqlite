@@ -609,9 +609,32 @@
       endif
 !     !!! output.pot and output.wtr turned on by same code named IWTR in file.cio
       if (iwtr == 1) then
+        !!~~~ SQLite ~~~
+        if(ioutput == 1) then
+            call sqlite3_set_column( colpot(1), j )
+            call sqlite3_set_column( colpot(2), iyr )
+            !!may have problems here for date
+            if(iprint == 0) call sqlite3_set_column(colpot(3), mo_chk)
+            if(iprint == 1) then
+                call sqlite3_set_column(colpot(3), i_mo)
+                call sqlite3_set_column(colpot(4), icl(iida))
+            end if
+            call sqlite3_set_column(colpot(1+datecol_num+1),potvol_ini)
+            call sqlite3_set_column(colpot(1+datecol_num+2),potsa_ini)
+            call sqlite3_set_column(colpot(1+datecol_num+3),spillo)
+            call sqlite3_set_column(colpot(1+datecol_num+4),potsep)
+            call sqlite3_set_column(colpot(1+datecol_num+5),potev)
+            call sqlite3_set_column(colpot(1+datecol_num+6),sol_sw(j))
+            call sqlite3_set_column(colpot(1+datecol_num+7),tileo)
+            call sqlite3_set_column(colpot(1+datecol_num+8),pot_vol(j))
+            call sqlite3_set_column(colpot(1+datecol_num+9),potsa(j))
+            call sqlite3_insert_stmt( db, stmtpot, colpot )
+        else
         write (125,2000) subnum(j), hruno(j), i, iyr, potvol_ini,       
      &       potsa_ini, spillo, potsep, potev, sol_sw(j), tileo,        
      &       pot_vol(j), potsa(j)
+        end if
+        !!~~~ SQLite ~~~
       endif
   
       return

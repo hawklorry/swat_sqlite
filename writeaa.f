@@ -313,6 +313,8 @@
       real :: yrs, xx, xmm, sumno3, sumorgn, summinp, sumorgp
       integer :: j, nnro, nicr, k, ly, ic, ii
 
+      call outprocess("writeaa")
+
 !! calculate number of years simulated
       yrs = 0.
       do j = 1, nbyr
@@ -505,6 +507,11 @@
 
 !! write average annual data
       if (iprint /= 1) then
+        !!~ ~ ~ SQLite ~ ~ ~
+        if(ioutput == 1) then
+            !!do nothing
+            !!don't need the ave annual output which would mix yearly output and monthly/daily output
+        else
         !! write average annual output--HRU (output.hru)
         call hruaa(yrs)
         call impndaa(yrs)
@@ -517,6 +524,8 @@
 
         !! write average annual output--subbasin (output.sub)
         call subaa(yrs)
+        end if
+        !!~ ~ ~ SQLite ~ ~ ~
       end if
 
 !! write average annual pesticide data (output.pst)
@@ -554,7 +563,14 @@
 
 
 !! write average annual summary tables in standard output file (.std)
-      call stdaa
+!!      call stdaa
+      !!~~~ SQLite ~~~
+      if(ioutput == 1) then
+        call stdaa_sqlite
+      else
+        call stdaa
+      end if
+      !!~~~ SQLite ~~~
 
 !! write average annual forecast table
       if (ffcst == 1 .and. fcstcnt > 0) then

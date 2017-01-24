@@ -105,10 +105,16 @@
         sol_pst(k,j,1) = sol_pst(k,j,1) + (1. - gc) * xx
  
         if (imgt == 1) then
+            !!~ ~ ~ SQLite ~ ~ ~
+            if(ioutput == 1) then
+                call mgt_sqlite(20,j)
+            else
          write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida, 
      *      "         ",
      *      "CONT PEST", phubase(j), phuacc(j), sol_sw(j),bio_ms(j), 
      *      sol_rsd(1,j),sol_sumno3(j),sol_sumsolp(j), cpst_kg(j)
+            end if
+            !!~ ~ ~ SQLite ~ ~ ~
         end if
            
           

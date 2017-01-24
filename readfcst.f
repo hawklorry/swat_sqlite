@@ -60,6 +60,7 @@
       real, dimension (12) :: pcpmm, pcpd
       integer :: mon, mdays, j, fcstregtot
 
+      call outprocess("readfcst")
 
       fcstregtot = 0
       i = 0

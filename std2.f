@@ -105,6 +105,8 @@
       real :: sumarea, xkm, xch_l1
       character (len=1) :: kpnd, kbnd, kwet, kubn, kpot, kdrn, kpst,ksep
 
+      call outprocess("std2")
+
 !!    input summary file
         !!write subbasin info
         write (24,1000)
@@ -218,8 +220,20 @@
  
 !!    chan.deg file
       do j = 1, nrch
+          !!~ ~ ~ SQLite ~ ~ ~
+          if(ioutput == 1) then
+            call sqlite3_set_column(coldeg(1),j)
+            call sqlite3_set_column(coldeg(2),0)!!year 0
+            call sqlite3_set_column(coldeg(3),ch_d(j))
+            call sqlite3_set_column(coldeg(4),ch_w(2,j))
+            call sqlite3_set_column(coldeg(5),ch_s(2,j))
+            call sqlite3_insert(db,tbldeg,coldeg)
+          else
         write (16,3000) j, ch_d(j), ch_w(2,j), ch_s(2,j)
+          end if
+          !!~ ~ ~ SQLite ~ ~ ~
       end do
+
 
       return
  1000 format (/t10,'Subbasin Input Summary:',/t10,                      

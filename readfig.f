@@ -129,6 +129,8 @@
       idum = 0
       eof = 0
 
+      call outprocess("readfig")
+
       do 
         a = ""
         read (102,5002,iostat=eof) a

@@ -238,5 +238,8 @@
 !     septic database file
       septdb = ""
 
+      !!SQLite Output
+      ioutput = 1 !!default is SQLite output, used to test
+      sq_indexnum = 0 !!number of index = 0
       return
       end

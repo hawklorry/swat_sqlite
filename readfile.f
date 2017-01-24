@@ -138,6 +138,8 @@
       urbandb = ""
       septdb = ""   !!SEPTIC CHANGES GSM 1/30/09
 
+      call outprocess("readfile")
+
       open (101,file="file.cio")
 
 !! Read project description
@@ -277,6 +279,10 @@
 !!Special Projects input
       read (101,5101) titldum
       read (101,*) isproj
+      !!~~~ SQLite ~~~
+      !!ignore other project type
+      isproj = 0
+      !!~~~ SQLite ~~~
       read (101,*) iclb
       read (101,5000) calfile
 
@@ -490,6 +496,8 @@
       isol = 0
       read (101,*,iostat=eof) isol  
       if (isol == 1) then
+        !!~ ~ ~ SQLite ~ ~ ~
+        if(ioutput == 0) then
          open (121,file='output.snu')
          write (121,12222) 
 12222   format (t25,'SURFACE',t39,'-------  SOIL PROFILE  -------',/, 
@@ -497,6 +505,8 @@
      &  'NO3',t57,'ORG_N',t67,'ORG_P',t80,'CN'/,t26,                    
      &  '(t/ha)',t35,'(kg/ha)',t45,                                     
      &  '(kg/ha)',t55,'(kg/ha)',t66,'(kg/ha)')
+        end if
+        !!~ ~ ~ SQLite ~ ~ ~
       end if  
 !! headwater code (0=do not route; 1=route)
       i_subhw = 0
@@ -599,28 +609,64 @@
       end if
 
       !!Open output files
-      open (24,file="input.std")
-      open (26,file="output.std")
+      !!~~~ SQLite ~~~
+      !!Only put parts of the results into sqlite database
+      if(ioutput == 1) then
+          !!output hru, sub, rch, sed, rsv into sqlite database
+          open (24,file="input.std")
+!          open (26,file="output.std")
 
-      open (28,file="output.hru",recl=1500)
-      if (ia_b == 1) then 
-        open (33333,file="outputb.hru",form='unformatted')
-      end if
-      open (30,file="output.pst",recl=600)
-      open (31,file="output.sub",recl=600)
-      if (ia_b == 1) then
-        open (66666,file = "outputb.sub", form = 'unformatted')
-      end if
-      open (7,file="output.rch",recl=800)
-      open (8,file="output.rsv",recl=800)
-      if (ia_b == 1) then
-        open (77777,file = "outputb.rch", form = 'unformatted')
-      end if
-      
-!!    sediment routing output file
-      open (84,file="output.sed",recl=800)
-!! write headings to sediment outputfile (output.sed)
-      write (84,1080)
+          !!Ignore binary output for hru, sub and rch
+          ia_b = 0
+!          open (28,file="output.hru",recl=1500)
+!          if (ia_b == 1) then
+!            open (33333,file="outputb.hru",form='unformatted')
+!          end if
+          open (30,file="output.pst",recl=600)
+!          open (31,file="output.sub",recl=600)
+!          if (ia_b == 1) then
+!            open (66666,file = "outputb.sub", form = 'unformatted')
+!          end if
+!          open (7,file="output.rch",recl=800)
+!          open (8,file="output.rsv",recl=800)
+!          if (ia_b == 1) then
+!            open (77777,file = "outputb.rch", form = 'unformatted')
+!          end if
+
+    !!    sediment routing output file
+!          open (84,file="output.sed",recl=800)
+    !! write headings to sediment outputfile (output.sed)
+!          write (84,1080)
+!1080  format (t8,'RCH',t17,'GIS',t23,'MON',t31,'AREAkm2',
+!     &t40,'SED_INtons',t51,'SED_OUTtons',t63,'SAND_INtons',t74,
+!     &'SAND_OUTtons',t87,'SILT_INtons',t98,'SILT_OUTtons',t111,
+!     &'CLAY_INtons',t122,'CLAY_OUTtons',t135,'SMAG_INtons',t146,
+!     &'SMAG_OUTtons',t160,'LAG_INtons',t171,'LAG_OUTtons',t184,
+!     &'GRA_INtons',t195,'GRA_OUTtons',t208,'CH_BNKtons',t220,
+!     &'CH_BEDtons',t232,'CH_DEPtons',t244,'FP_DEPtons',t259,'TSSmg/L')
+      else
+          open (24,file="input.std")
+          open (26,file="output.std")
+
+          open (28,file="output.hru",recl=1500)
+          if (ia_b == 1) then
+            open (33333,file="outputb.hru",form='unformatted')
+          end if
+          open (30,file="output.pst",recl=600)
+          open (31,file="output.sub",recl=600)
+          if (ia_b == 1) then
+            open (66666,file = "outputb.sub", form = 'unformatted')
+          end if
+          open (7,file="output.rch",recl=800)
+          open (8,file="output.rsv",recl=800)
+          if (ia_b == 1) then
+            open (77777,file = "outputb.rch", form = 'unformatted')
+          end if
+
+    !!    sediment routing output file
+          open (84,file="output.sed",recl=800)
+    !! write headings to sediment outputfile (output.sed)
+          write (84,1080)
 1080  format (t8,'RCH',t17,'GIS',t23,'MON',t31,'AREAkm2',               
      &t40,'SED_INtons',t51,'SED_OUTtons',t63,'SAND_INtons',t74,         
      &'SAND_OUTtons',t87,'SILT_INtons',t98,'SILT_OUTtons',t111,         
@@ -628,7 +674,9 @@
      &'SMAG_OUTtons',t160,'LAG_INtons',t171,'LAG_OUTtons',t184,         
      &'GRA_INtons',t195,'GRA_OUTtons',t208,'CH_BNKtons',t220,           
      &'CH_BEDtons',t232,'CH_DEPtons',t244,'FP_DEPtons',t259,'TSSmg/L')
-     
+      end if
+      !!~~~ SQLite ~~~
+
       ! Jaehak, sedimentation-filtration output
       open (77778,file = "bmp-sedfil.out") !jaehak temp urban print out
       write(77778,'(a46)') 'Sed-Fil Basins Configuration'   
@@ -667,16 +715,20 @@
       open (14,file='rsv.dat')
 !!darrell output files added for interface plotting
       open (11123,file='hyd.out')
-      open (16,file='chan.deg')
+      if(ioutput == 0) open (16,file='chan.deg')
 !!    open (17,file='wbl.out')
       open (18,file='swat.qst')
 !! output amount of water stored in the soil layer (formerly 'soilst.out')
       if (isto > 0) then
+        !!~ ~ ~ SQLite ~ ~ ~
+        if(ioutput == 0) then
         open (129,file='output.swr')
         write (129,5001) 
 5001    format (t20,'Soil Storage (mm)',/,t15,'Layer #',/,t3,'Day',t13,
      *  'HRU',t28,'1',t40,'2',t52,'3',t64,'4',t76,'5',t87,'6',t100,
      *  '7',t112,'8',t124,'9',t135,'10')
+        end if
+        !!~ ~ ~ SQLite ~ ~ ~
       end if
 
 
@@ -694,9 +746,16 @@
 !  0=no print 1=print
       read (101, *,iostat=eof) imgt
 	if (imgt==1) then
+	    !!~ ~ ~ SQLite ~ ~ ~
+	    if(ioutput == 1) then
+	        !!do nothing, the mgt table structure would be created in subroutine
+	        !!headout_sqlite_mgt
+	    else
          open (143, file="output.mgt", recl=600)
-         write (143,999)
-999      format(2x,'Sub',2x,'Hru',2x,'Year',3x,'Mon',3x,'Day',3x,
+         write(143,999)
+         end if
+         !!~ ~ ~ SQLite ~ ~ ~
+999   format(2x,'Sub',2x,'Hru',2x,'Year',3x,'Mon',3x,'Day',3x,
      *'crop/fert/pest', 4x,
      *'Operation',4x,'phubase',3x,'phuacc',4x,'sol_sw',4x,'bio_ms',3x,
      *'sol_rsd',7x,'sol',7x,'sol',5x,'yield',3x,'irr amt',
@@ -722,10 +781,18 @@
 ! 0 =no print  1 =print
       read (101,*,iostat=eof) iwtr
         if (iwtr == 1) then
-          open (29,file="output.wtr",recl=800)
-! write statement added for Aziz (06/25/09)
-          open (125,file='output.pot')
-          write (125, 1000) 
+          !!~~~ SQLite ~~~
+          if(ioutput == 1) then
+              !!do nothing, output.wtr and output.pot would be write in
+              !!SQLite database
+          else
+              open (29,file="output.wtr",recl=800)
+    ! write statement added for Aziz (06/25/09)
+              open (125,file='output.pot')
+              write (125, 1000)
+          end if
+          !!~~~ SQLite ~~~
+
         end if
         
  1000  format (1x,'SUB',t6,'HRU',t12,'DAY',t17,'YEAR',t26,'VOL-I',t37,  
@@ -738,7 +805,15 @@
 !     icalen = 0 (print julian day) 1 (print month/day/year) 
       read (101,*, iostat=eof) icalen
 !!!!! if icalen == 1 (print month/day/year) - force iprint to be daily  <--nubz asked srin 06/11/2012
-      if (icalen == 1) iprint = 1
+!      if (icalen == 1) iprint = 1
+      !!~~~ SQLite ~~~
+      !!force to use normal calender output for daily output
+      if (iprint == 1) then
+        icalen = 1
+      else
+        icalen = 0
+      end if
+      !!~~~ SQLite ~~~
       
       if (isproj == 1) then
         open (19,file="output2.std")

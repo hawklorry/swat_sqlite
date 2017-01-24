@@ -232,8 +232,21 @@
       end if
 
       if (iwtr == 1) then
+        if(ioutput == 1) then
+            !!~~~ SQLite ~~~
+            call sqlite3_set_column( colwtr(1), j )
+            call sqlite3_set_column( colwtr(2), cropname )
+            call sqlite3_set_column( colwtr(3), nmgt(j) )
+            call sqlite3_set_column( colwtr(4), iyr )
+            do ii=1,40
+                call sqlite3_set_column( colwtr(4+ii), pdvas(ii) )
+            end do
+            call sqlite3_insert_stmt( db, stmtwtr, colwtr )
+            !!~~~ SQLite ~~~
+          else
           write (29,1000) cropname, j, subnum(j), hruno(j), sb,         
      &               nmgt(j), iyr, hru_km(j), (pdvas(ii), ii = 1, 40)
+          end if
       end if
         end if
       end do

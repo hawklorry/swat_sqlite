@@ -387,6 +387,68 @@
 
       if (iprint == 1 .and. curyr > nyskip) then
         if (iscen == 1.and. isproj == 0) then
+            if(ioutput == 1) then
+                !!~~~ SQLite ~~~
+                !!use subbasin id instead reservoir id to make reservoir
+                !!selection in interface more easier
+                call sqlite3_set_column( colrsv(1), res_sub(jres) )
+                call sqlite3_set_column( colrsv(2), iyr )
+                call sqlite3_set_column( colrsv(3), i_mo )
+                call sqlite3_set_column( colrsv(4), icl(iida) )
+
+                call sqlite3_set_column( colrsv(5), res_vol(jres) )
+                call sqlite3_set_column( colrsv(6), resflwi / 86400. )
+
+                call sqlite3_set_column( colrsv(7), resflwo / 86400. )
+                call sqlite3_set_column( colrsv(8), respcp )
+                call sqlite3_set_column( colrsv(9), resev )
+                call sqlite3_set_column( colrsv(10), ressep )
+                call sqlite3_set_column( colrsv(11), ressedi )
+                call sqlite3_set_column( colrsv(12), ressedo )
+
+                call sqlite3_set_column( colrsv(13), sedcon )
+                call sqlite3_set_column( colrsv(14), varoute(4,inum2) )
+                call sqlite3_set_column( colrsv(15), resorgno )
+                call sqlite3_set_column( colrsv(16), resorgnc )
+
+                call sqlite3_set_column( colrsv(17), varoute(5,inum2) )
+                call sqlite3_set_column( colrsv(18), resorgpo )
+                call sqlite3_set_column( colrsv(19), resorgpc )
+                call sqlite3_set_column( colrsv(20), varoute(6,inum2) )
+
+                call sqlite3_set_column( colrsv(21), resno3o )
+                call sqlite3_set_column( colrsv(22), resno3c )
+                call sqlite3_set_column( colrsv(23), varoute(15,inum2) )
+                call sqlite3_set_column( colrsv(24), resno2o )
+                call sqlite3_set_column( colrsv(25), resno2c )
+
+                call sqlite3_set_column( colrsv(26), varoute(14,inum2) )
+                call sqlite3_set_column( colrsv(27), resnh3o )
+                call sqlite3_set_column( colrsv(28), resnh3c )
+                call sqlite3_set_column( colrsv(29), varoute(7,inum2) )
+
+                call sqlite3_set_column( colrsv(30), ressolpo )
+                call sqlite3_set_column( colrsv(31), ressolpc )
+                call sqlite3_set_column( colrsv(32), varoute(13,inum2) )
+                call sqlite3_set_column( colrsv(33), reschlao )
+
+                call sqlite3_set_column( colrsv(34), res_seci(jres) )
+                call sqlite3_set_column( colrsv(35), respesti )
+                call sqlite3_set_column( colrsv(36), reactw )
+                call sqlite3_set_column( colrsv(37), volatpst )
+                call sqlite3_set_column( colrsv(38), setlpst )
+                call sqlite3_set_column( colrsv(39), resuspst )
+
+                call sqlite3_set_column( colrsv(40), difus )
+                call sqlite3_set_column( colrsv(41), reactb )
+                call sqlite3_set_column( colrsv(42), bury )
+                call sqlite3_set_column( colrsv(43),solpesto + sorpesto)
+                call sqlite3_set_column( colrsv(44), lkpst_conc(jres) )
+                call sqlite3_set_column( colrsv(45), lkspst_conc(jres) )
+
+                call sqlite3_insert_stmt( db, stmtrsv, colrsv )
+                !!~~~ SQLite ~~~
+            else
         write (8,5000) jres, iida, res_vol(jres), resflwi / 86400.,     
      &    (resflwo / 86400.), respcp, resev, ressep, ressedi, ressedo,  
      &    sedcon, varoute(4,inum2), resorgno, resorgnc,                 
@@ -397,6 +459,7 @@
      &    res_seci(jres), respesti, reactw, volatpst, setlpst, resuspst,
      &    difus, reactb, bury, solpesto + sorpesto, lkpst_conc(jres),   
      &    lkspst_conc(jres),iyr
+         end if
         else if (isproj == 1) then
         write (22,5000) jres, iida, res_vol(jres), resflwi / 86400.,    
      &    (resflwo / 86400.), respcp, resev, ressep, ressedi, ressedo,  

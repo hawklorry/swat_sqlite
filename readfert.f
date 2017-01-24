@@ -54,6 +54,8 @@
       ifnum = 0
       eof = 0
 
+      call outprocess("readfert")
+
       do
         !! initialize local variables
         bctkddb = 0.

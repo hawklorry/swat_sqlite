@@ -75,6 +75,8 @@
 !!    initialize variables
       eof = 0
 
+      call outprocess("readwwq")
+
       do
       read (101,5100,iostat=eof) titldum
       if (eof < 0) exit

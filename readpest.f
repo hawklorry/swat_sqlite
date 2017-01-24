@@ -50,6 +50,7 @@
       real :: skocp, wofp, hlff, hlfs, apefp, pwsol
       eof = 0
 
+      call outprocess("readpest")
 
       do
         !!initialize local variables

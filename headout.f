@@ -55,6 +55,8 @@
 
       integer :: j, ilen
       
+      call outprocess("headout")
+
       call header
 
 !! write headings to HRU output file (output.hru)

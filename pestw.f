@@ -67,6 +67,8 @@
       integer :: k, kk, j, l
       real :: pfp, pfg
 
+      call outprocess("pestw")
+
       do k = 1, npmx
         kk = 0
         kk = npno(k)

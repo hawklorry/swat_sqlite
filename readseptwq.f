@@ -76,6 +76,8 @@
       isnum = 0
       eof = 0
 
+      call outprocess("readseptwq")
+
 !!    septic database filename present in file.cio
       if (septdb /= '             ') then
         open (171,file=septdb)

@@ -360,6 +360,8 @@
       wwqfile = ""
       numlu=1
 
+      call outprocess("readbsn")
+
 !! read basin parameters
       do
       read (103,1000) titldum

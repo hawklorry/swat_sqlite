@@ -98,6 +98,7 @@
       integer :: idlst, j, iix, iiz, ic, mon, ii
       real :: xx
 
+      call outprocess("simulate")
 
       do curyr = 1, nbyr
         write (*,1234) curyr

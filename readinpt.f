@@ -48,6 +48,8 @@
 !! By Zhang for C/N cycling  
 !!=============================
 
+      call outprocess("readinpt")
+
       if (irtpest > 0) irtpest = nope(irtpest)
       npmx = 0
       npmx = Sum(pstflg)         !! set equal to # pesticides modeled in

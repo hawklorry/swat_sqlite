@@ -41,6 +41,8 @@
 
       use parm
 
+      call outprocess("std1")
+
 !!    input summary file
       write (24,1000) prog,values(2),values(3),values(1),values(5),   
      &values(6),values(7)
@@ -131,10 +133,16 @@
       if (icrk == 1) write (24,1110)
 
 !!    standard output file
+      !!~~~ SQLite ~~~
+      if(ioutput == 1) then
+        !!do nothing
+      else
       write (26,1000) prog,values(2),values(3),values(1),values(5),     
      &values(6),values(7)
       write (26,1010) title
       write (26,1020) nbyr, da_km
+      end if
+      !!~~~ SQLite ~~~
       if (isproj == 1) then
         write (19,1000) prog,values(2),values(3),values(1),values(5),   
      &  values(6),values(7)
@@ -146,7 +154,11 @@
       write (11123,5000)     
 
 !!    chan.deg file
+      !!~ ~ ~ SQLite ~ ~ ~
+      if(ioutput == 0) then
       write (16,7000)
+      end if
+      !!~ ~ ~ SQLite ~ ~ ~
 
       return
  1000 format ('1',/t5,a80,t105,2(i2,'/'),i4,5x,2(i2,':'),i2)
