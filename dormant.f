@@ -413,7 +413,8 @@
             if(ioutput == 1) then
                 call mgt_sqlite(17,j)
             else
-            write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida, 
+            write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida,
+     *       hru_km(j), 
      *       cpnm(idplt(j)),"START-DORM", phubase(j), phuacc(j), 
      *       sol_sw(j),bio_ms(j), sol_rsd(1,j), sol_sumno3(j),
      *       sol_sumsolp(j)
@@ -445,7 +446,8 @@
             if(ioutput == 1) then
                 call mgt_sqlite(18,j)
             else
-                 write (143,1000) subnum(j), hruno(j), iyr, i_mo, iida, 
+                 write (143,1000) subnum(j), hruno(j), iyr, i_mo, iida,
+     *       hru_km(j), 
      *       cpnm(idplt(j)), "END-DORM", phubase(j), phuacc(j), 
      *       sol_sw(j), bio_ms(j), sol_rsd(1,j), sol_sumno3(j),
      *       sol_sumsolp(j)
@@ -455,6 +457,6 @@
 
         end if
 
-1000  format (a5,1x,a4,3i6,2a15,7f10.2)
+1000  format (a5,1x,a4,3i6,1x,e10.5,1x,2a15,7f10.2)
       return
       end

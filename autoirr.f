@@ -187,7 +187,7 @@
                 call mgt_sqlite(21,j)
             else
             write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida, 
-     *       "         ",  " AUTOIRR", phubase(j), phuacc(j)
+     *       hru_km(j), "         ",  " AUTOIRR", phubase(j), phuacc(j)
      *       , sol_sw(j),bio_ms(j), sol_rsd(1,j),sol_sumno3(j)
      *         ,sol_sumsolp(j), aird(j)
      *          ,irrsc(j), irrno(j)
@@ -198,7 +198,8 @@
         endif
       end if 
         
-1000  format (a5,1x,a4,3i6,2a15,7f10.2,10x,f10.2,70x,i10,10x,i10) 
+1000  format (a5,1x,a4,3i6,1x,e10.5,1x,2a15,7f10.2,10x,f10.2,70x,i10,
+     * 10x,i10) 
 
       return
       end

@@ -123,8 +123,10 @@
                
 	         !compute runoff lag for the ponded STE and add to already estimated qday
 	         surf_bs(1,j) = Max(1.e-6, surf_bs(1,j) + qlyr)
-             qday = qday + qlyr * brt(j) !runoff that drains into the main channel for the day
-             surf_bs(1,j) = surf_bs(1,j) - qday
+               cbodu(j) = (cbodu(j) * qday + sptbodconcs(isep_typ(j)) 
+     &             * qlyr * brt(j)) / (qday + qlyr * brt(j)) !add septic effluent cbod (mg/l) concentration 
+               qday = qday + qlyr * brt(j) !runoff that drains into the main channel for the day
+               surf_bs(1,j) = surf_bs(1,j) - qday
 
 	         ! Initiate counting the number of days the system fails and makes surface ponding of STE
 	         if(sep_tsincefail(j)==0) sep_tsincefail(j) = 1
@@ -157,7 +159,7 @@
               ul_excess = 0.
               exit
             end if
-            if (j1 == 1 .and. ul_excess > 0.) then
+            if (ly == 1 .and. ul_excess > 0.) then
               !! add ul_excess to depressional storage and then to surfq
               pot_vol(j) = pot_vol(j) + ul_excess
             end if

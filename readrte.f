@@ -41,7 +41,7 @@
 !!                               |1 no vegetative cover on channel
 !!    ch_d(:)       |m           |average depth of main channel
 !!    ch_di(:)      |m           |initial depth of main channel
-!!    ch_eqn        |            |sediment routine methods: 
+!!    ch_eqn        |            |sediment routine methods (DAILY): 
 !!                               | 0 = original SWAT method
 !!                               | 1 = Bagnold's
 !!                               | 2 = Kodatie
@@ -110,11 +110,11 @@
       if (eof < 0) exit
       read (103,*,iostat=eof) ch_opco(irch)
       if (eof < 0) exit
-	  read (103,*,iostat=eof) chside(irch)
+      read (103,*,iostat=eof) chside(irch)
 	  if (eof < 0) exit
       read (103,*,iostat=eof) ch_bnk_bd(irch)
-	  if (eof < 0) exit
-	  read (103,*,iostat=eof) ch_bed_bd(irch)
+        if (eof < 0) exit
+      read (103,*,iostat=eof) ch_bed_bd(irch)
 	  if (eof < 0) exit
       read (103,*,iostat=eof) ch_bnk_kd(irch)
 	  if (eof < 0) exit
@@ -131,8 +131,13 @@
       read (103,5100,iostat=eof) (ch_erodmo(irch,mo), mo = 1,12)
 	  if (eof < 0) exit
 	  read (103,*,iostat=eof) ch_eqn(irch)
-        if (eof < 0) exit
-	  read (103,*,iostat=eof) prf(irch)
+      if (eof < 0) exit
+      read (103,*,iostat=eof) prf(irch)
+      if (eof < 0) exit
+      read (103,*,iostat=eof) spcon(irch)
+      if (eof < 0) exit
+      read (103,*,iostat=eof) spexp(irch)
+      if (eof < 0) exit
       exit
       end do
 
@@ -148,6 +153,8 @@
       if (tc_bnk(irch) <= 0.) tc_bnk(irch)=0. !! Critical shear stress (N.m^2)
       if (tc_bed(irch) <= 0.) tc_bed(irch)=0. !! Critical shear stress (N.m^2)
       if (prf(irch) <= 0.) prf(irch) = prf_bsn
+      if (spcon(irch) <= 0.) spcon(irch) = spcon_bsn
+      if (spexp(irch) <= 0.) spexp(irch) = spexp_bsn
 
       if (ch_eqn(irch) <= 0) then
         ch_eqn(irch)=0 !! SWAT Default sediment routing routine

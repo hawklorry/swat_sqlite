@@ -547,13 +547,10 @@
 	if (isnow == 1) then
          open (115,file='output.snw')
          write (115,1010)
+!!    output temperatures by elevation band (Dhiraj Raj - 07/22/2015)
+         open (116,file='ebandtemp.out')
+         write (116,1011)
       end if
-
-
-!!   read landuse change file
-!     read (101,5000,iostat=eof)  lucfile
-!     call caps (lucfile)
-
 
       !!Set default output variables for REACH, SUBBASIN and HRU files if none
       !!were specified
@@ -724,9 +721,9 @@
         if(ioutput == 0) then
         open (129,file='output.swr')
         write (129,5001) 
-5001    format (t20,'Soil Storage (mm)',/,t15,'Layer #',/,t3,'Day',t13,
-     *  'HRU',t28,'1',t40,'2',t52,'3',t64,'4',t76,'5',t87,'6',t100,
-     *  '7',t112,'8',t124,'9',t135,'10')
+5001    format (t20,'Soil Storage (mm)',/,t25,'Layer #',/,t3,'Day',t9,
+     *  'HRU',t19,'GIS',t34,'1',t46,'2',t58,'3',t70,'4',t82,'5',t93,'6',
+     *  t106,'7',t118,'8',t130,'9',t141,'10')
         end if
         !!~ ~ ~ SQLite ~ ~ ~
       end if
@@ -755,8 +752,8 @@
          write(143,999)
          end if
          !!~ ~ ~ SQLite ~ ~ ~
-999   format(2x,'Sub',2x,'Hru',2x,'Year',3x,'Mon',3x,'Day',3x,
-     *'crop/fert/pest', 4x,
+999   format(2x,'Sub',2x,'Hru',2x,'Year',3x,'Mon',3x,'Day',
+     *'   AREAkm2', 3x,'crop/fert/pest', 4x,
      *'Operation',4x,'phubase',3x,'phuacc',4x,'sol_sw',4x,'bio_ms',3x,
      *'sol_rsd',7x,'sol',7x,'sol',5x,'yield',3x,'irr amt',
      *5x,'amt',5x,'mix eff',
@@ -822,27 +819,31 @@
         open (22,file="output2.rsv",recl=800)
       end if
 
-      if (cswat == 1) then
-	open (100,file="cswat_profile.txt",recl=280)
-	write (100,*) 'year',';','day',';','hru',';','cmass',';','sol_rsd',
-     &';','mancmass'
-      end if
-
 !! septic result  J.Jeong Feb2009
       open (173,file='septic.out')  
 	write(173,5102) 'HRU','YEAR','DAY','Precip', 'PERC',        
-     & 'sol_ul','sol_st','sol_fc','nh3init','nh3bgn','nh3end',   
-     & 'no3init','no3bgn','no3end', 'nitrN','denitrN','solpinit',
+     & 'sol_ul','sol_st','sol_fc','nh3bgn','nh3end',   
+     & 'no3bgn','no3end', 'nitrN','denitrN',
      & 'solpbgn','solpend','solpconc'
-      write(173,5102) '#','','','(mm)','(m3)','(mm)',    
-     & '(mm)','(mm)','(kg/ha)','(kg/ha)','(kg/ha)','(kg/ha)',
-     & '(kg/ha)','(kg/ha)','(kg/ha)','(kg/ha)','(kg/ha)',
+      write(173,5102) '#','','','(mm)','(mm)','(mm)',    
+     & '(mm)','(mm)','(kg/ha)','(kg/ha)',
+     & '(kg/ha)','(kg/ha)','(kg/ha)','(kg/ha)',
      & '(kg/ha)','(kg/ha)','(mg/l)'
 
+!!   charles ikenberry output file
+!      open (2222,file='charles.out',recl=800)
+!      write (2222,2222) 
+!2222  format (3x,'yr',2x,'day',5x,'res_vol',7x,'res_no3',7x,'ressa',
+!     & 6x,'conc_n',4x,'con_nirr',6x,'nsetlr',5x,'theta_n',7x,'tmpav',
+!     & 6x,'nitrok',/,15x,'m3',12x,'kg',12x,'ha',9x,'kg/m3',5x,'kg/m3',
+!     & 9x,'--',9x,'--',12x,'deg c',6x,'--')
       close (101)
       return
 
  1010 format (32x,'SNOW(mm) at ELEVATION BAND (1-10)',/,                
+     &1x,'DAY','   YR',t14,'GISnum',t28,'1',t36,'2',t44,'3',t52,'4',    
+     &t60,'5',t68,'6',t76,'7',t84,'8',t92,'9',t99,'10')
+ 1011 format (32x,'Average TEMP(deg C) at ELEVATION BAND (1-10)',/,
      &1x,'DAY','   YR',t14,'GISnum',t28,'1',t36,'2',t44,'3',t52,'4',    
      &t60,'5',t68,'6',t76,'7',t84,'8',t92,'9',t99,'10')
  5000 format (6a)

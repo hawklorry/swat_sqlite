@@ -53,7 +53,7 @@
      &         "       LAI","   YLDt_ha","  BACTPct ","  BACTLPct",
      &         " WTAB_CLIm"," WTAB_SOLm","     SNOmm"," CMUPkg_ha",
      &         "CMTOTkg_ha","   QTILEmm"," TNO3kg_ha"," LNO3kg_ha",
-     &         "  GW_Q_Dmm"," LATQCNTmm"/)
+     &         "  GW_Q_Dmm"," LATQCNTmm"," TVAPkg_ha"/)
 
 !!    column headers for subbasin output file
       hedb = (/"  PRECIPmm"," SNOMELTmm","     PETmm","      ETmm",     
@@ -61,7 +61,7 @@
      &         "    WYLDmm","  SYLDt_ha"," ORGNkg_ha"," ORGPkg_ha",
      &         "NSURQkg_ha"," SOLPkg_ha"," SEDPkg_ha","  LAT_Q_mm",
      &         "LATNO3kg_h","GWNO3kg_ha","CHOLAmic_L","CBODU_mg_L",
-     &         " DOXQ_mg_L"," TNO3kg_ha"/)
+     &         " DOXQ_mg_L"," TNO3kg_ha","   QTILEmm"," TVAPkg_ha"/)
 
 !!  added headers TOTAL N/TOTALP/NO3 Concentration TO HEADING FOR OUTPUT.RCH GSM 10/26/2011
 !!    column headers for reach output file

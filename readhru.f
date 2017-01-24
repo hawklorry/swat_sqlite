@@ -48,11 +48,20 @@
 !!    lat_sed(:)  |g/L           |sediment concentration in lateral flow
 !!    lat_ttime(:)|days          |lateral flow travel time
 !!    ov_n(:)     |none          |Manning's "n" value for overland flow
+!!    n_reduc     |              |nitrogen uptake reduction factor (not currently used; defaulted 300.)
+!!    n_lag       |dimensionless |lag coefficient for calculating nitrate concentration in subsurface
+!!                                 drains (0.001 - 1.0) 
+!!    n_ln        |dimensionless |power function exponent for calculating nitrate concentration in 
+!!                                 subsurface drains (1.0 - 3.0)
+!!    n_lnco      |dimensionless |coefficient for power function for calculating nitrate concentration 
+!!                                 in subsurface drains (0.5 - 4.0)
 !!    pot_fr(:)   |km2/km2       |fraction of HRU area that drains into pothole
-!!    pot_k       |              |conductivity of soil surface layer for pothole infiltration
+!!    pot_k       |(mm/hr)       |hydraulic conductivity of soil surface of pothole 
+!!                   [defaults to condcutivity of upper soil (0.01--10.) layer]
 !!    pot_no3l(:) |1/day         |nitrate decay rate in impounded area
 !!    pot_nsed(:) |mg/L          |normal sediment concentration in impounded
 !!                               |water (needed only if current HRU is IPOT)
+!!    pot_solp(:) |1/d           | soluble P loss rate in the pothole (.01 - 0.5)
 !!    pot_tile(:) |m3/s          |average daily outflow to main channel from
 !!                               |tile flow if drainage tiles are installed in
 !!                               |pothole (needed only if current HRU is IPOT)
@@ -64,11 +73,19 @@
 !!                               |depression/impounded area (read in as mm
 !!                               |and converted to m^3) (needed only if current
 !!                               |HRU is IPOT)
+!!    r2adj       |dimensionless |curve number retention parameter adjustment factor to 
+!!                                 adjust surface runoff for flat slopes (0.5 - 3.0)
 !!    rip_fr(:)   |km2/km2       |fraction of HRU area that drains into riparian 
 !!                               |zone
 !!    rsdin(:)    |kg/ha         |initial residue cover
 !!    slsoil(:)   |m             |slope length for lateral subsurface flow
 !!    slsubbsn(:) |m             |average slope length for subbasin
+!!    surlag      |days          |Surface runoff lag time.
+!!                               |This parameter is needed in subbasins where
+!!                               |the time of concentration is greater than 1 
+!!                               |day. SURLAG is used to create a "storage" for
+!!                               |surface runoff to allow the runoff to take 
+!!                               |longer than 1 day to reach the subbasin outlet
 !!    usle_ls(:)  |none          |USLE equation length slope (LS) factor
 !!Modified parameter variable! D. Moriasi 4/8/2014
 !!    r2adj       |none          |retention parameter adjustment factor (greater than 1)
@@ -82,7 +99,6 @@
 !!    eof         |none          |end of file flag (=-1 if eof, else =0)
 !!    epcohru     |none          |plant water uptake compensation factor (0-1)
 !!    escohru     |none          |soil evaporation compensation factor (0-1)
-!!    r2adjhru    |none          |retention parameter adjustment factor (=>1) !D.Moriasi 4/8/2014
 !!    sin_sl      |none          |Sin(slope angle)
 !!    titldum     |NA            |title line of .sub file (not used)
 !!    xm          |none          |exponential in equation to calculate
@@ -100,12 +116,12 @@
       character (len=80) :: titldum
       integer :: eof
       real :: xm, sin_sl, epcohru, escohru
-      real :: r2adjhru !D. Moriasi 4/4/2014    
+
+      
 
       eof = 0
       escohru = 0.
       epcohru = 0.
-      r2adjhru = 0.    !D. Moriasi 4/4/2014 
       
       do
       read (108,5100) titldum
@@ -200,11 +216,31 @@
         read (108,*,iostat=eof) n_lnco(ihru)
 !-------------------------------------------------------Moriasi 4/8/2014        
         if (eof < 0) exit
-        read (108,*,iostat=eof) surlag(ihru)   
+        read (108,*,iostat=eof) surlag(ihru)
+        if (eof < 0) exit
 !-------------------------------------------------------Moriasi 4/8/2014 
-        read (108,*,iostat=eof) r2adj(ihru) !Soil retention parameter D. Moriasi 4/8/2014 
+        read (108,*,iostat=eof) r2adj(ihru) !Soil retention parameter D. Moriasi 4/8/2014
+        if (eof < 0) exit
+        read (108,*,iostat=eof) cmn(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) cdn(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) nperco(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) phoskd(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) psp(ihru)
+        if (eof < 0) exit 
+        read (108,*,iostat=eof) sdnco(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) iwetile(ihru)
+        if (eof < 0) exit
+        read (108,*,iostat=eof) iwetgw(ihru)
 	exit
       end do
+      
+      if (iwetile(ihru) <= 0) iwetile(ihru) = 0
+      if (iwetgw(ihru) <= 0) iwetgw(ihru) = 0
 
       if (n_reduc(ihru) <= 0.) n_reduc(ihru) = 300.
       if (n_lag(ihru) <= 0.) n_lag(ihru) = 0.25
@@ -216,13 +252,17 @@
       if (epcohru > 1.e-4) epco(ihru) = epcohru
 
 !!    set default values
-      if (dep_imp(ihru) <=0.) dep_imp(ihru) = depimp_bsn
-      if (surlag(ihru) <=0.) surlag(ihru) = surlag_bsn      
-!     if (ddrain(ihru) <= 0.) ddrain(ihru) = 1000.
-!     if (tdrain(ihru) <= 0.) tdrain(ihru) = 24.
-!     if (gdrain(ihru) <= 0.) gdrain(ihru) = 96.
+      if (dep_imp(ihru) <= 0.) dep_imp(ihru) = depimp_bsn
+      if (surlag(ihru) <= 0.) surlag(ihru) = surlag_bsn 
+      if (cdn(ihru) <= 0.) cdn(ihru) = cdn_bsn
+      if (nperco(ihru) <= 0.) nperco(ihru) = nperco_bsn
+      if (cmn(ihru) <= 0.) cmn(ihru) = cmn_bsn
+      if (phoskd(ihru) <= 0.) phoskd(ihru) = phoskd_bsn
+      if (psp(ihru) <= 0.) psp(ihru) = psp_bsn
+      if (sdnco(ihru) <= 0.) sdnco(ihru) = sdnco_bsn
 !New and modified parameters D. Moriasi 4/8/2014
       if (r2adj(ihru) <= 0.) r2adj(ihru) = r2adj_bsn
+      if (r2adj(ihru) > 0.95) r2adj(ihru) = 0.95
 !! comment the following line for the hru_fraction data !!
       if (hru_fr(ihru) <= 0.) hru_fr(ihru) = .0000001
       if (slsubbsn(ihru) <= 0.) slsubbsn(ihru) = 50.0

@@ -193,7 +193,7 @@
 
       integer :: jres, k, ii
       real :: sepmm, resorgpc, ressolpc, sedcon, resorgnc, resno3c
-      real :: resno2c, resnh3c
+      real :: resno2c, resnh3c,zz
 
       jres = 0
       jres = inum1
@@ -236,9 +236,9 @@
 
         !! Adjust Reservoir Storage for Irrigation Diversions
         call irr_res
-
+      zz=varoute(19,inum2)
         !! perform reservoir water/sediment balance
-        if(ievent<=1) then		!! urban modeling by J.Jeong
+        if(ievent == 0) then		!! urban modeling by J.Jeong
 	    call res
 	  else
 	    call reshr
@@ -286,7 +286,7 @@
         varoute(21,ihout) = varoute(21,inum2)  !!conservative metal #2
         varoute(22,ihout) = varoute(22,inum2)  !!conservative metal #3
 
-        if (ievent > 2) then
+        if (ievent > 0) then
           do ii = 1, nstep
             hhvaroute(1,ihout,ii) = 0.           !!undefined
             hhvaroute(2,ihout,ii) = hhresflwo(ii)
@@ -305,8 +305,8 @@
             hhvaroute(15,ihout,ii) = resno2o / real(nstep)
             hhvaroute(16,ihout,ii) = 0.          !!CBOD
             hhvaroute(17,ihout,ii) = 0.          !!dis O2
-            hhvaroute(18,ihout,ii) = varoute(18,inum2) / real(nstep) !!persistent bact
-            hhvaroute(19,ihout,ii) = varoute(19,inum2) / real(nstep) !!less persist bact
+            hhvaroute(18,ihout,ii) = hhvaroute(18,inum2,ii) !!persistent bact
+            hhvaroute(19,ihout,ii) = hhvaroute(19,inum2,ii)  !!less persist bact
             hhvaroute(20,ihout,ii) = varoute(20,inum2) / real(nstep) !!cons metal #1
             hhvaroute(21,ihout,ii) = varoute(21,inum2) / real(nstep) !!cons metal #2
             hhvaroute(22,ihout,ii) = varoute(22,inum2) / real(nstep) !!cons metal #3

@@ -12,13 +12,11 @@
 !!                             |used for a given process
 !!    idt         |minutes     |length of time step used to report
 !!                             |precipitation data for sub-daily modeling
-!!    ievent      |none        |rainfall/runoff code
-!!                             |0 daily rainfall/curve number technique
-!!                             |1 daily rainfall/Green&Ampt technique/daily
-!!                             |  routing
-!!                             |2 sub-daily rainfall/Green&Ampt technique/
-!!                             |  daily routing
-!!                             |3 sub-daily rainfall/Green&Ampt/hourly routing
+!!    ievent      |none          |rainfall/runoff code
+!!                               |0 daily rainfall/curve number technique
+!!                               |1 sub-daily rainfall/Green&Ampt/hourly
+!!                               |  routing
+!!                               |3 sub-daily rainfall/Green&Ampt/hourly routing
 !!    ihru        |none        |HRU number
 !!    iwave       |none        |flag to differentiate calculation of HRU and
 !!                             |subbasin sediment calculation
@@ -79,7 +77,7 @@
       ab = 0.02083
       
       select case (ievent)
-        case(0, 1)                !! daily rainfall, estimate al5
+        case(0)                !! daily rainfall, estimate al5
           preceff = 0.
           if (iwave > 0) then
             !! subbasin sediment calculations
@@ -110,7 +108,7 @@
             al5 = amp_r(i_mo,hru_sub(j))
           end if
 
-        case default            !! subdaily rainfall, get from pcp data
+        case (1)            !! subdaily rainfall, get from pcp data
           if (idt <= 30) then
             k = 0
             k = 30 / idt

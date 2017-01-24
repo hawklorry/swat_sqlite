@@ -122,7 +122,8 @@
                 end do
                 call sqlite3_insert_stmt( db, stmtswr, colswr )
             else
-          write (129,5000) iida, j, (sol_st(j1,j), j1 = 1, sol_nly(j))
+          write (129,5000) iida, j, subnum(j), hruno(j), (sol_st(j1,j), 
+     &         j1 = 1, sol_nly(j))
 !          write (129,5000) iida, subnum(j), hruno(j),                   
 !     &             (sol_no3(j1,j), j1 = 1, sol_nly(j))
             end if
@@ -233,7 +234,9 @@
 
       return
 !5000  format(i5,1x,a5,a4,1x,500e12.4)
-5000  format (i5,1x,i5,1x,500e12.4)
+
+!5000  format (i5,1x,i5,1x,500e12.4)
+5000  format (i5,1x,i5,1x,a5,a4,1x,500e12.4)
 5001  format(2i5,500f12.4)
 5100  format(1x,a5,a4,1x,i4,1x,i3,1x,250(e16.4,1x))
 5200  format(i7,i9,i6,i5,1x,e9.4,f12.3,f7.1,f14.3)

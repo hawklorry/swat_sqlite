@@ -59,7 +59,7 @@
       use parm
 
       integer :: j
-      real :: xx, vap, vap_tile
+      real :: xx, vap
 
       j = 0
       j = ihru
@@ -67,11 +67,11 @@
 
 !! compute soluble P lost in surface runoff
       xx = 0.
-      xx = sol_bd(1,j) * sol_z(1,j) * phoskd
+      xx = sol_bd(1,j) * sol_z(1,j) * phoskd(j)
       surqsolp(j) = sol_solp(1,j) * surfq(j) / xx 
         !!units ==> surqsolp = [kg/ha * mm] / [t/m^3 * mm * m^3/t] = kg/ha
 !     if (surfq(j) > 0.001) then
-!     write (17,77) i, iyr, sol_bd(1,j), sol_z(1,j), phoskd, surfq(j),  &
+!     write (17,77) i, iyr, sol_bd(1,j), sol_z(1,j), phoskd(j), surfq(j),  &
 !    &              sol_solp(1,j), surqsolp(j)
 !     end if
 ! 77  format(2i6,6f10.3)
@@ -79,11 +79,13 @@
       surqsolp(j) = Max(surqsolp(j), 0.)
       sol_solp(1,j) = sol_solp(1,j) - surqsolp(j)
 
+      !! bmp adjustment
+      surqsolp(j) = surqsolp(j) * bmp_sp(j)
 
 !! compute soluble P leaching
       vap = 0.
       vap = sol_solp(1,j) * sol_prk(1,j) / ((conv_wt(1,j) / 1000.)      
-     &                                                         * pperco)
+     &                                            * pperco_sub(1,j))
       vap = Min(vap, .5 * sol_solp(1,j))
       sol_solp(1,j) = sol_solp(1,j) - vap
       
@@ -91,6 +93,8 @@
       if (ldrain(j) > 0) then
         xx = Min(1., sol_crk(j) / 3.0)
         vap_tile = xx * vap
+        !! bmp adjustment
+        vap_tile = vap_tile * bmp_spt(j)
         vap = vap - vap_tile
       end if
 
