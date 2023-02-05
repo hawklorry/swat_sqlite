@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31605.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite", "SQLite\SQLite.vcxproj", "{A0E78A08-628B-4CCD-9146-E7118EE4540D}"
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "swat_sqlite", "swat_sqlite\swat_sqlite.vfproj", "{5117ADFB-C2ED-48E9-99F0-5DB36A5E7A6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0E78A08-628B-4CCD-9146-E7118EE4540D} = {A0E78A08-628B-4CCD-9146-E7118EE4540D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0E78A08-628B-4CCD-9146-E7118EE4540D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0E78A08-628B-4CCD-9146-E7118EE4540D}.Debug|Win32.Build.0 = Debug|Win32
+		{A0E78A08-628B-4CCD-9146-E7118EE4540D}.Release|Win32.ActiveCfg = Release|Win32
+		{A0E78A08-628B-4CCD-9146-E7118EE4540D}.Release|Win32.Build.0 = Release|Win32
+		{5117ADFB-C2ED-48E9-99F0-5DB36A5E7A6B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5117ADFB-C2ED-48E9-99F0-5DB36A5E7A6B}.Debug|Win32.Build.0 = Debug|Win32
+		{5117ADFB-C2ED-48E9-99F0-5DB36A5E7A6B}.Release|Win32.ActiveCfg = Release|Win32
+		{5117ADFB-C2ED-48E9-99F0-5DB36A5E7A6B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7254FF8A-AE9B-4F57-958C-4B1DDF8F2A8C}
+	EndGlobalSection
+EndGlobal
