@@ -261,8 +261,8 @@
       use parm
 
       integer :: j, sb, kk, ii
-      real :: cnv, sub_ha, wtmp, baseflw, bf_fr,hr
-      real :: sub_hwyld(nstep), hqd(4*nstep), hsd(4*nstep),hqdtst(nstep)   ! hqd, hsd locally defined. J.Jeong 4/26/2009
+      real*8 :: cnv, sub_ha, wtmp, baseflw, bf_fr,hr
+      real*8 :: sub_hwyld(nstep), hqd(4*nstep), hsd(4*nstep),hqdtst(nstep)   ! hqd, hsd locally defined. J.Jeong 4/26/2009
 
       j = ihru
       sb = inum1
@@ -278,7 +278,7 @@
         sub_subp(sb) = sub_subp(sb) + subp(j) * hru_fr(j)
         sub_snom(sb) = sub_snom(sb) + snomlt * hru_fr(j)
         sub_pet(sb) = sub_pet(sb) + pet_day * hru_fr(j)
-        sub_etday(sb) = sub_etday(sb) + etday * hru_fr(j)
+        sub_etday(sb) = sub_etday(sb) + etday * hru_fr(j) 
         sub_sumfc(sb) = sub_sumfc(sb) + sol_sumfc(j) * hru_fr(j)
         sub_sw(sb) = sub_sw(sb) + sol_sw(j) * hru_fr(j)
         sub_sep(sb) = sub_sep(sb) + sepbtm(j) * hru_fr(j)
@@ -324,15 +324,15 @@
         sub_dsag(sb) = sub_dsag(sb) + sagyld(j)
         sub_dlag(sb) = sub_dlag(sb) + lagyld(j)
 
-        surqno3(j) = amax1(1.e-12,surqno3(j))
-        latno3(j) = amax1(1.e-12,latno3(j))
-        no3gw(j) = amax1(1.e-12,no3gw(j))
-        surqsolp(j) = amax1(1.e-12,surqsolp(j))
-        minpgw(j) = amax1(1.e-12,minpgw(j))
-        sedorgn(j) = amax1(1.e-12,sedorgn(j))
-        sedorgp(j) = amax1(1.e-12,sedorgp(j))
-        sedminpa(j) = amax1(1.e-12,sedminpa(j))
-        sedminps(j) = amax1(1.e-12,sedminps(j))
+        surqno3(j) = dmax1(1.e-12,surqno3(j))
+        latno3(j) = dmax1(1.e-12,latno3(j))
+        no3gw(j) = dmax1(1.e-12,no3gw(j))
+        surqsolp(j) = dmax1(1.e-12,surqsolp(j))
+        minpgw(j) = dmax1(1.e-12,minpgw(j))
+        sedorgn(j) = dmax1(1.e-12,sedorgn(j))
+        sedorgp(j) = dmax1(1.e-12,sedorgp(j))
+        sedminpa(j) = dmax1(1.e-12,sedminpa(j))
+        sedminps(j) = dmax1(1.e-12,sedminps(j))
         
 
       !! subbasin averages: nutrients
@@ -340,6 +340,7 @@
         sub_no3(sb) = sub_no3(sb) + surqno3(j) * hru_fr(j)
         sub_latno3(sb) = sub_latno3(sb) + latno3(j) * hru_fr(j)
         sub_tileno3(sb) = sub_tileno3(sb) + tileno3(j) * hru_fr(j)
+        sub_tilep(sb) = sub_tilep(sb) + tilep(j) * hru_fr(j)
  !       sub_tileq(sb) = sub_tileq(sb) + tileq(j) * hru_fr(j)      !! jane f
         sub_tileq(sb) = sub_tileq(sb) + qtile * hru_fr(j)          !! jane f
         sub_vaptile(sb) = sub_vaptile(sb) + vap_tile * hru_fr(j)   !! jane f
@@ -536,7 +537,7 @@
                                                   !!sedorgp & sedminps
          varoute(6,ihout) = (sub_no3(sb) + sub_latno3(sb) +             
      &      sub_tileno3(sb) + sub_gwno3(sb)) * sub_ha          !!surqno3 & latno3 & no3gw
-         varoute(7,ihout) = (sub_solp(sb) + sub_gwsolp(sb)) * sub_ha   !!surqsolp & minpgw & sedminpa
+         varoute(7,ihout) = (sub_solp(sb) + sub_gwsolp(sb) + sub_tilep(sb)) * sub_ha   !!surqsolp & minpgw & sedminpa
          varoute(8,ihout) = 0.
          varoute(9,ihout) = 0.
          varoute(10,ihout) = 0.
@@ -633,6 +634,7 @@
               hhvaroute(21,ihout,ii) = 0.                          !!cmetal#2
               hhvaroute(22,ihout,ii) = 0.                          !!cmetal#3
             end if
+            QHY(ii,ihout,IHX(1))=hhvaroute(2,ihout,ii)/(dthy * 3600.) !m3 -> m3/s Jaehak flood routing 2017
 		  end do
         end if
 

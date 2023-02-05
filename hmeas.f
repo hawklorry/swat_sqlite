@@ -53,8 +53,8 @@
       use parm
 
       integer :: k, iyp, idap, l, inum3sprev
-      real :: rhdbsb
-      real, dimension (mrg) :: rhmeas
+      real*8 :: rhdbsb, tmpmean
+      real*8, dimension (mrg) :: rhmeas
 
       !! initialize variables for the day
       rhmeas = 0.
@@ -92,19 +92,20 @@
             end if
           else
 !!	      if (i == 1) then
- 	  	  if (rhmeas(ihgage(hru_sub(k))) < 1. .and.                    
-     *                             rhmeas(ihgage(hru_sub(k))) > 0.) then
- 	        rhd(k) = rhmeas(ihgage(hru_sub(k))) 
-            else
-              tmpmean=(tmpmx(i_mo,hru_sub(k))+tmpmn(i_mo,hru_sub(k)))/2.
-              rhd(k) = Ee(rhmeas(ihgage(hru_sub(k)))) / Ee(tmpmean)
-            endif  
-          end if
+              
+           if (rhmeas(ihgage(hru_sub(k))) > 1. .or.                    
+     *                    rhmeas(ihgage(hru_sub(k))) < 0.) then
+             !! convert dew point to humidity
+             tmpmean=(tmpmx(i_mo,hru_sub(k))+tmpmn(i_mo,hru_sub(k)))/2.
+             rhd(k) = Ee(rhmeas(ihgage(hru_sub(k)))) / Ee(tmpmean)
+           else
+             rhd(k) = rhmeas(ihgage(hru_sub(k))) 
+           endif
+	    end if
 	  end do
 
       return
-! 5200 format (7x,300f8.3)
-! 5300 format (i4,i3,300f8.3)
- 5200 format (7x,1800f8.3)
- 5300 format (i4,i3,1800f8.3)
+
+ 5200 format (7x,1900f8.3)
+ 5300 format (i4,i3,1900f8.3)
       end

@@ -86,6 +86,8 @@
       use parm
 
       !!initialize variables at beginning of day
+      tilep= 0.
+      sub_tilep = 0.
       cbodu = 0.
       chl_a = 0.
       cnday = 0.
@@ -183,6 +185,7 @@
       sub_surfq = 0.
       sub_sw = 0.
       sub_tileno3 = 0.
+      sub_vaptile = 0.
       sub_tran = 0.
       sub_wtmp = 0.
       sub_wyld = 0.

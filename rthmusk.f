@@ -119,11 +119,12 @@
       use parm
 
       integer :: jrch, ii
-      real :: xkm, det, yy, c1, c2, c3, c4, wtrin, p, vol, c
-      real :: tbase, topw
+      real*8 :: xkm, det, yy, c1, c2, c3, c4, wtrin, p, vol, c
+      real*8 :: tbase, topw
 
       jrch = 0
       jrch = inum1
+      hrtevp = 0
 
  !! Compute storage time constant for reach
       xkm = 0.

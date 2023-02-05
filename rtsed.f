@@ -80,8 +80,8 @@
       use parm
 
       integer :: jrch
-      real :: qdin, sedin, vc, cyin, cych, depnet, deg1, deg2, dep
-      real :: depdeg, dot, outfract, deg
+      real*8 :: qdin, sedin, vc, cyin, cych, depnet, deg1, deg2, dep
+      real*8 :: depdeg, dot, outfract, deg
 
       jrch = 0
       jrch = inum1
@@ -187,7 +187,7 @@
 !!    Bank erosion
       rchdy(55,jrch) = 0.
 !!    Channel Degredation
-      rchdy(56,jrch) = deg2
+      rchdy(56,jrch) = deg1 + deg2
 !!    Channel Deposition
       rchdy(57,jrch) = dep
 !!    Floodplain Deposition

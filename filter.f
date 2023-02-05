@@ -147,7 +147,7 @@
       use parm
 
       integer :: j, k
-      real :: sdrain_vfs1, drain_vfs2, area_vfs1, area_vfs2, vfs_depth1,
+      real*8 :: sdrain_vfs1, drain_vfs2, area_vfs1, area_vfs2, vfs_depth1,
      & vfs_depth2, vfs_sed1, vfs_sed2, surq_remove1, surq_remove2,
      & surq_remove, sed_remove1, sed_remove2, sed_remove, remove1, 
      & remove2, orgn_remove, surqno3_remove, partp_remove, solP_remove,
@@ -313,7 +313,7 @@
 	if (remove1 > 100.) remove1 = 100.
 	if (remove1 < 0.) remove1 = 0.
 	
-	remove21 = 29.3 + 0.51 * surq_remove2
+	remove2 = 29.3 + 0.51 * surq_remove2
 	if (remove2 > 100.) remove2 = 100.
 	if (remove2 < 0.) remove2 = 0.
 

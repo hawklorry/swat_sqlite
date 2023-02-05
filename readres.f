@@ -116,7 +116,7 @@
       character (len=80) :: titldum
       character (len=13) :: resdayo, resmono
       integer :: eof, mon, j
-      real :: resdif, targ, lnvol, res_d50
+      real*8 :: resdif, targ, lnvol, res_d50
 
 !!    initialize local variables
       resdayo = ""
@@ -247,7 +247,8 @@
       if (res_esa(i) <= 0.0) res_esa(i) = 1.5 * res_psa(i) 
       targ = 0.
       targ = res_pvol(i) + 0.1 * (res_evol(i) - res_pvol(i))
-      if (res_vol(i) > targ ) res_vol(i) = targ
+      if (res_vol(i) < 0.0) res_vol(i) = 0.0
+      !if (res_vol(i) > targ ) res_vol(i) = targ
       if (evrsv(i) <= 0.) evrsv(i) = 0.6
      
      

@@ -26,6 +26,7 @@
 
       use parm
 
+      real*8, intent (in) :: years
       integer :: j
 
       do j = 1, subtot
@@ -34,5 +35,5 @@
       end do
 
       return
- 5000 format ('REACH ',i4,1x,i8,1x,f5.1,20e12.4)
+ 5000 format ('REACH ',i6,1x,i8,1x,f5.1,20e12.4)
       end

@@ -78,9 +78,9 @@
       use parm
 
       integer :: j1, j, m
-      real:: cone, depth, dg, ad, ap 
-      real:: hdrain, gee, e, gee1, gee2, gee3, pi	
-      real:: k2, k3, k4, k5, k6 
+      real*8 :: cone, depth, dg, ad, ap 
+      real*8 :: hdrain, gee, e, gee1, gee2, gee3, pi	
+      real*8 :: k2, k3, k4, k5, k6 
 
       !! initialize variables
    
@@ -188,7 +188,7 @@
         stor = precipday - inflpcp - etday !Daniel 10/05/07
         if(surfq(j) > 0.0) stor=stmaxd(j)
       else
-        stor = pot_vol(j)/(potsa(j)*1000)
+        stor = pot_vol(j)!/(potsa(j)*1000) pot_vol is already in mm, Jaehak 2020
       endif
       if(hdrain < hdmin) hdrain=hdmin
       if((stor > storro).and.(y1 < 5.0)) then
