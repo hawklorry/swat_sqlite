@@ -115,7 +115,7 @@
 
       character (len=80) :: titldum
       integer :: eof
-      real :: xm, sin_sl, epcohru, escohru
+      real*8 :: xm, sin_sl, epcohru, escohru
 
       
 
@@ -152,14 +152,13 @@
       if (eof < 0) exit
       read (108,5100,iostat=eof) titldum
       if (eof < 0) exit
-!      if (ipot(ihru) == ihru) then   Srini pothole
         read (108,*,iostat=eof) pot_tilemm(ihru)    !!NUBZ
         if (eof < 0) exit
         read (108,*,iostat=eof) pot_volxmm(ihru) 
         if (eof < 0) exit
         read (108,*,iostat=eof) pot_volmm(ihru) 
         if (eof < 0) exit
-        read (108,*,iostat=eof) pot_nsed(ihru) 
+        read (108,*,iostat=eof) pot_nsed(ihru)           
         if (eof < 0) exit
         read (108,*,iostat=eof) pot_no3l(ihru)
         if (eof < 0) exit

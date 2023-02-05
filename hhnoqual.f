@@ -93,10 +93,10 @@
       use parm
 
       integer :: jrch, ii
-      real :: wtrin, chlin, algin, orgnin, ammoin, nitratin, nitritin
-      real :: orgpin, dispin, cbodin, disoxin, wtmp
-      real :: orgpcon, solpcon, cbodcon, o2con, wtrtot
-      real :: algcon, orgncon, nh3con, no2con, no3con
+      real*8 :: wtrin, chlin, algin, orgnin, ammoin, nitratin, nitritin
+      real*8 :: orgpin, dispin, cbodin, disoxin, wtmp
+      real*8 :: orgpcon, solpcon, cbodcon, o2con, wtrtot
+      real*8 :: algcon, orgncon, nh3con, no2con, no3con
 
       jrch = 0
       jrch = inum1
@@ -157,7 +157,8 @@
          cbodcon = 0.
          o2con = 0.
          wtrtot = wtrin + hrchwtr(ii)
-         if (ii == 1) then
+         if (wtrtot > 0.01) then
+          if (ii == 1) then
          algcon = (algin * wtrin + algae(jrch) * hrchwtr(ii)) / wtrtot
          orgncon = (orgnin * wtrin + organicn(jrch) * hrchwtr(ii))      
      &                                                          / wtrtot
@@ -185,9 +186,10 @@
          solpcon = (dispin * wtrin + hsolp(ii-1) * hrchwtr(ii)) / wtrtot
          cbodcon = (cbodin * wtrin + hbod(ii-1) * hrchwtr(ii)) / wtrtot
          o2con = (disoxin * wtrin + hdisox(ii-1) * hrchwtr(ii)) / wtrtot
+          end if
          end if
 
-         if (algcon < 1.e-6) algon = 0.0
+         if (algcon < 1.e-6) algcon = 0.0
          if (orgncon < 1.e-6) orgncon = 0.0
          if (nh3con < 1.e-6) nh3con = 0.0
          if (no2con < 1.e-6) no2con = 0.0

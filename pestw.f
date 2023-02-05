@@ -65,7 +65,7 @@
       use parm
 
       integer :: k, kk, j, l
-      real :: pfp, pfg
+      real*8 :: pfp, pfg
 
       call outprocess("pestw")
 

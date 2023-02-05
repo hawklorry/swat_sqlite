@@ -59,7 +59,7 @@
 
       integer, intent (in) :: iwave
       integer :: j
-      real :: c
+      real*8 :: c
 
       j = 0
       j = ihru
@@ -101,9 +101,6 @@
       else
         sedyld(j) = sedyld(j) / Exp(sno_hru(j) * 3. / 25.4)
       end if
-
-      !! bmp adjustment
-      sedyld(j) = sedyld(j) * bmp_sed(j)
       
 	!!Particle size distribution of sediment yield
 	  sanyld(j) = sedyld(j) * det_san(j)    !! Sand yield

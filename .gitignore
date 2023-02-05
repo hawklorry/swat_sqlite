@@ -2,3 +2,9 @@ Intel/Debug/
 Intel/SQLite/Debug/
 Intel/swat_sqlite/Debug/
 Intel/.vs/swat_sqlite/v16/
+Intel/Release/
+Intel/SQLite/Release/
+Intel/swat_sqlite/Release/
+Intel/SQLite/SQLite.vcxproj.user
+Intel/swat_sqlite/swat_sqlite.u2d
+Intel/swat_sqlite/swat_sqlite.vfproj.hawkl.user

@@ -119,7 +119,7 @@
 !!    changes for Mike Winchell if apex.swt files has a different start date than the SWAT run
       if (ifirsta(inum1) == 1) then
         do 
-          read (112+inum1,*) idapa(inum1), iypa(inum1), flodaya(inum1),
+          read (400+inum1,*) idapa(inum1), iypa(inum1), flodaya(inum1),
      & seddaya(inum1), orgndaya(inum1), orgpdaya(inum1), no3daya(inum1),
      & minpdaya(inum1)
 	    if(idapa(inum1) == id1 .and. iypa(inum1) == iyr) exit
@@ -149,7 +149,7 @@
          varoute(21,ihout) = 0.0      
          varoute(22,ihout) = 0.0 
          if (curyr /= nbyr .and. iida /= idal) then
-           read (112+inum1,*) idapa(inum1), iypa(inum1), flodaya(inum1),
+           read (400+inum1,*) idapa(inum1), iypa(inum1), flodaya(inum1),
      & seddaya(inum1), orgndaya(inum1), orgpdaya(inum1), no3daya(inum1),
      & minpdaya(inum1)
          endif
@@ -178,12 +178,12 @@
      
       if (ievent > 0) then
         do ii = 1, nstep
-          hhvaroute(2,ihout,ii) = flodaya(inum1) / real(nstep)
-          hhvaroute(3,ihout,ii) = seddaya(inum1) / real(nstep)
-          hhvaroute(4,ihout,ii) = orgndaya(inum1) / real(nstep)
-          hhvaroute(5,ihout,ii) = orgpdaya(inum1) / real(nstep)
-          hhvaroute(6,ihout,ii) = no3daya(inum1) / real(nstep)
-          hhvaroute(7,ihout,ii) = minpdaya(inum1) / real(nstep)
+          hhvaroute(2,ihout,ii) = flodaya(inum1) / dfloat(nstep)
+          hhvaroute(3,ihout,ii) = seddaya(inum1) / dfloat(nstep)
+          hhvaroute(4,ihout,ii) = orgndaya(inum1) / dfloat(nstep)
+          hhvaroute(5,ihout,ii) = orgpdaya(inum1) / dfloat(nstep)
+          hhvaroute(6,ihout,ii) = no3daya(inum1) / dfloat(nstep)
+          hhvaroute(7,ihout,ii) = minpdaya(inum1) / dfloat(nstep)
 
         end do
       end if

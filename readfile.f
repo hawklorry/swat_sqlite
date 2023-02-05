@@ -40,7 +40,7 @@
 !!    ipdvab(:)   |none        |output variable codes for output.sub file
 !!    ipdvar(:)   |none        |output variable codes for output.rch file
 !!    ipdvas(:)   |none        |output varaible codes for output.hru file
-!!    iprp        |none        |print code for output.pst file
+!!    iprp        |none        |print code for output.pes file
 !!                             |0 do not print pesticide output
 !!                             |1 print pesticide output
 !!    isproj      |none        |special project code:
@@ -124,7 +124,7 @@
      &    pestdb, fertdb, fcstfile
 	
       character (len=80) :: titldum
-      real :: sumv, xx
+      real*8 :: sumv, xx
       integer :: rn, j, ii, eof
       eof = 0
 
@@ -664,7 +664,7 @@
           open (84,file="output.sed",recl=800)
     !! write headings to sediment outputfile (output.sed)
           write (84,1080)
-1080  format (t8,'RCH',t17,'GIS',t23,'MON',t31,'AREAkm2',               
+1080  format (t10,'RCH',t17,'GIS',t23,'MON',t31,'AREAkm2',               
      &t40,'SED_INtons',t51,'SED_OUTtons',t63,'SAND_INtons',t74,         
      &'SAND_OUTtons',t87,'SILT_INtons',t98,'SILT_OUTtons',t111,         
      &'CLAY_INtons',t122,'CLAY_OUTtons',t135,'SMAG_INtons',t146,        
@@ -799,9 +799,9 @@
      &'(mm)',t77,'(mm)',t87,'(mm)',t97,'(mm)',t107,'(ha)')  
        
 !     code for writing out calendar day or julian day to output.rch, .sub, .hru files
-!     icalen = 0 (print julian day) 1 (print month/day/year) 
+!     icalen = 0 (print julian day) 1 (print month/day/year)
+!     icalen MUST be == zero  if IPRINT == 3 to print subdaily;
       read (101,*, iostat=eof) icalen
-!!!!! if icalen == 1 (print month/day/year) - force iprint to be daily  <--nubz asked srin 06/11/2012
 !      if (icalen == 1) iprint = 1
       !!~~~ SQLite ~~~
       !!force to use normal calender output for daily output

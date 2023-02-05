@@ -98,9 +98,9 @@
 
       use parm
 
-      real :: flohr, sedhr, orgnhr, orgphr, no3hr, minphr, solpsthr
-      real :: nh3hr, no2hr, cmtl1hr, cmtl2hr, cmtl3hr, srbpsthr
-      real :: bactphr, bactlphr, chlahr, disoxhr, cbodhr
+      real*8 :: flohr, sedhr, orgnhr, orgphr, no3hr, minphr, solpsthr
+      real*8 :: nh3hr, no2hr, cmtl1hr, cmtl2hr, cmtl3hr, srbpsthr
+      real*8 :: bactphr, bactlphr, chlahr, disoxhr, cbodhr
       integer :: idap, iyp, ii, j, ihr
 
 !! initialize variables
@@ -194,6 +194,9 @@
       varoute(26,ihout) = varoute(26,ihout) + sedhr * 0.   ! sag
       varoute(27,ihout) = varoute(27,ihout) + sedhr * 0.   ! lag
       varoute(28,ihout) = 0.                    ! gravel
+
+      
+      QHY(ii,ihout,IHX(1)) = hhvaroute(2,ihout,ii) / (dthy * 3600.) !added by Jaehak for subdaily routing, 2019
 
       end do
 

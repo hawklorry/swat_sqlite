@@ -4,7 +4,7 @@
 		<Platform Name="Win32"/></Platforms>
 	<Configurations>
 		<Configuration Name="Debug|Win32">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" IgnoreStandardIncludePath="true" Diagnostics="diagnosticsDisableAll" WarnInterfaces="true" LocalVariableStorage="localStorageSave" FloatingPointExceptionHandling="fpe0" FlushDenormalResultsToZero="true" Traceback="true" RuntimeChecks="rtChecksAll" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" IgnoreStandardIncludePath="true" FixedFormLineLength="fixedLength132" Diagnostics="diagnosticsDisableAll" WarnInterfaces="true" LocalVariableStorage="localStorageSave" FloatingPointExceptionHandling="fpe0" FlushDenormalResultsToZero="true" Traceback="true" RuntimeChecks="rtChecksAll" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
@@ -14,7 +14,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|Win32">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Optimization="optimizeFull" IgnoreStandardIncludePath="true" Diagnostics="diagnosticsDisableAll" LocalVariableStorage="localStorageSave" FloatingPointExceptionHandling="fpe0" FlushDenormalResultsToZero="true" RuntimeChecks="rtChecksNone" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Optimization="optimizeFull" IgnoreStandardIncludePath="true" FixedFormLineLength="fixedLength132" Diagnostics="diagnosticsDisableAll" LocalVariableStorage="localStorageSave" FloatingPointExceptionHandling="fpe0" FlushDenormalResultsToZero="true" RuntimeChecks="rtChecksNone" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
@@ -119,6 +119,7 @@
 		<File RelativePath="..\..\hhnoqual.f"/>
 		<File RelativePath="..\..\hhwatqual.f"/>
 		<File RelativePath="..\..\hmeas.f"/>
+		<File RelativePath="..\..\HQDAV.f90"/>
 		<File RelativePath="..\..\hruaa.f"/>
 		<File RelativePath="..\..\hruallo.f"/>
 		<File RelativePath="..\..\hruday.f90"/>
@@ -151,6 +152,7 @@
 		<File RelativePath="..\..\lid_raingarden.f"/>
 		<File RelativePath="..\..\lidinit.f"/>
 		<File RelativePath="..\..\lids.f"/>
+		<File RelativePath="..\..\log_normal.f"/>
 		<File RelativePath="..\..\lwqdef.f"/>
 		<File RelativePath="..\..\main.f"/>
 		<File RelativePath="..\..\mgt_sqlite.f"/>
@@ -271,6 +273,7 @@
 		<File RelativePath="..\..\rthpest.f"/>
 		<File RelativePath="..\..\rthr.f"/>
 		<File RelativePath="..\..\rthsed.f"/>
+		<File RelativePath="..\..\rthvsc.f90"/>
 		<File RelativePath="..\..\rtmusk.f"/>
 		<File RelativePath="..\..\rtout.f"/>
 		<File RelativePath="..\..\rtpest.f"/>
@@ -324,6 +327,7 @@
 		<File RelativePath="..\..\surfstor.f"/>
 		<File RelativePath="..\..\surq_daycn.f"/>
 		<File RelativePath="..\..\surq_greenampt.f"/>
+		<File RelativePath="..\..\sw_init.f"/>
 		<File RelativePath="..\..\swbl.f"/>
 		<File RelativePath="..\..\sweep.f"/>
 		<File RelativePath="..\..\swu.f"/>

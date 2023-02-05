@@ -47,10 +47,10 @@
 
       use parm
       implicit none
-      prog = "SWAT Dec 23 2016    VER 2016/Rev 664"
+      prog = "SWAT Jan 5   VER 2022/Rev 683"
       write (*,1000)
- 1000 format(1x,"               SWAT2016               ",/,             
-     &          "               Rev. 664               ",/,             
+ 1000 format(1x,"               SWAT2022               ",/,             
+     &          "               Rev. 683               ",/,             
      &          "      Soil & Water Assessment Tool    ",/,             
      &          "               PC Version             ",/,
      &          "        SWAT_SQLite, Zhiqiang YU      ",/,
@@ -85,6 +85,8 @@
       end if
       call std2
       !!~ ~ ~ SQLITE ~ ~ ~
+      
+      !call sw_init
 
       !! convert integer to string for output.mgt file
       subnum = ""
@@ -110,8 +112,7 @@
       endif
         if (iclb /= 4) then
       do iscen = 1, scenario
-
-     
+    
         !! simulate watershed processes
         call simulate
 
@@ -129,7 +130,7 @@
       !!~ ~ ~ SQLite ~ ~ ~
 
          end if
-      do i = 101, 109       !Claire 12/2/09: change 1, 9  to 101, 109.
+      do i = 101, 109 
         close (i)
       end do
       close(124)

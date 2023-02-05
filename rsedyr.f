@@ -29,7 +29,7 @@
       integer :: j
 
       do j = 1, subtot
-          rchyro(58,j) = rchyro(58,j)/Real(idlast)
+          rchyro(58,j) = rchyro(58,j)/dfloat(idlast)
           !!~ ~ ~ SQLITE ~ ~ ~
           if(ioutput == 1) then
             call sqlite3_set_column( colsed(1), j )
@@ -48,5 +48,5 @@
       end do
 
       return
- 5000 format ('REACH ',i4,1x,i8,1x,i5,20e12.4)
+ 5000 format ('REACH ',i6,1x,i8,1x,i5,20e12.4)
       end

@@ -61,8 +61,8 @@
       use parm
 
       integer :: j, jj
-      real :: sro, ssfnlyr, percnlyr, vv, vno3, co
-      real :: cosurf, nloss
+      real*8 :: sro, ssfnlyr, percnlyr, vv, vno3, co
+      real*8 :: cosurf, nloss
 
       j = 0
       j = ihru
@@ -140,8 +140,6 @@
         end if
         ssfnlyr = Min(ssfnlyr, sol_no3(jj,j))
         latno3(j) = latno3(j) + ssfnlyr
-        !! bmp adjustment
-        latno3(j) = latno3(j) * bmp_sns(j)
         sol_no3(jj,j) = sol_no3(jj,j) - ssfnlyr
 
         !! calculate nitrate in percolate
@@ -156,8 +154,8 @@
 
 
       nloss = (2.18 * dis_stream(j) - 8.63) / 100.
-      nloss = amax1(0.,nloss)
-      nloss = Amin1(1.,nloss)
+      nloss = dmax1(0.,nloss)
+      nloss = dmin1(1.,nloss)
       latno3(j) = (1. - nloss) * latno3(j)
 
       return

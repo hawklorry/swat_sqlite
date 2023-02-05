@@ -110,13 +110,13 @@
       use parm
 
       integer :: nly, j, jj, n
-      real :: xx, dg, wt1, zdst, soldepth, sumno3, sumorgn, summinp
-      real :: sumorgp, solpst, soil_TP, labfrac,solp
+      real*8 :: xx, dg, wt1, zdst, soldepth, sumno3, sumorgn, summinp
+      real*8 :: sumorgp, solpst, soil_TP, labfrac,solp
       
       !!by zhang
       !!=============
-          real :: sol_mass
-          real :: FBM, FHP, RTNO, FHS, X1, RTO, sol_min_n
+          real*8 :: sol_mass
+          real*8 :: FBM, FHP, RTNO, FHS, X1, RTO, sol_min_n
           sol_mass = 0.
           DG = 0.
           FBM = 0.
@@ -241,7 +241,7 @@
 
         !! Set active pool based on dynamic PSP MJW
 		
-	    if (sol_P_model == 0) then 
+	    if (sol_P_model == 0) then  
 	      !! Allow Dynamic PSP Ratio
             !! convert to concentration
             solp = sol_solp(j,i) / conv_wt(j,i) * 1000000.
