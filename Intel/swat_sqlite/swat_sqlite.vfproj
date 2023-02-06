@@ -332,6 +332,7 @@
 		<File RelativePath="..\..\sweep.f"/>
 		<File RelativePath="..\..\swu.f"/>
 		<File RelativePath="..\..\tair.f"/>
+		<File RelativePath="..\..\temparms.f"/>
 		<File RelativePath="..\..\tgen.f"/>
 		<File RelativePath="..\..\theta.f"/>
 		<File RelativePath="..\..\tillfactor.f"/>

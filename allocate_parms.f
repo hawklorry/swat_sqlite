@@ -53,13 +53,23 @@
       allocate (co_p(mhru))      
       
 !! initialize variables    
-      mvaro = 33
+      mvaro = 45    !!!! salty dog +1
       mhruo = 79
-      mrcho = 62
+      mrcho = 74 !!modified from 62 for salt - srini   +1 salty dog
       msubo = 24
       mstdo = 113
       motot = 1200    !!! 100 year limit
-   
+      
+!! Srini 11_1_22
+      allocate (tmp_win1(mhru))
+      allocate (tmp_win2(mhru))
+      allocate (tmp_sum1(mhru))
+      allocate (tmp_sum2(mhru))
+      allocate (tmp_spr1(mhru))
+      allocate (tmp_spr2(mhru))
+      allocate (tmp_fal1(mhru))
+      allocate (tmp_fal2(mhru))
+        
       allocate (tilep(mhru))
       allocate (surlag(mhru))
       call outprocess("allocate_parms")
@@ -342,7 +352,9 @@
       allocate (icolr(mrcho))
 !     allocate (ipdvar(mrcho))
 !!  increased ipdvar(42) to 45 to add Total N/Total P/NO3conc(mg/l)
-      allocate (ipdvar(46))    
+!!  increased ipdvar(46) to 56 to add salt - srini
+!!  increased ipdvar(56) to 58 to add sar and ec - Katrin
+      allocate (ipdvar(58))    
       allocate (rchaao(mrcho,mxsubch))  
       allocate (rchdy(mrcho,mxsubch))  
       allocate (rchmono(mrcho,mxsubch))  
@@ -773,7 +785,8 @@
 !!    arrays which contain data related to years of rotation,
 !!    applications, and HRUs
       allocate (auto_wstr(mhru))
-!! burn 3/5/09   
+      allocate (irr_daymin(mhru))
+      allocate (irr_daycur(mhru))
      
       allocate (cfrt_id(mhru))
       allocate (cfrt_kg(mhru))
@@ -1705,6 +1718,18 @@
 	allocate (bmp_pn(mhru)) 	
 	allocate (bmp_sn(mhru))	
 	allocate (bmp_bac(mhru))
+	
+	!! **salt**
+      allocate (bmp_salt(mhru))
+      allocate (sub_salt(10,msub))
+      allocate (salt_flag(20,mhru))
+      allocate (sro_salt(20,mhru,10))
+      allocate (slt_salt(20,mhru,10))
+      allocate (gw_salt(20,mhru,10))
+      allocate (tile_salt(20,mhru,10))
+      allocate (sub_saltmo(mch,12))
+      allocate (saltdr(mch))
+      !! **salt**
       
       allocate (bmp_flos(mhru))
 	allocate (bmp_seds(mhru))
@@ -1752,7 +1777,8 @@
      & interval_last(mhru,4),lid_f_last(mhru,4),lid_cumr_last(mhru,4),
      & lid_str_last(mhru,4),lid_farea(mhru,4),lid_qsurf(mhru,4),
      & lid_sw_add(mhru,4),lid_cumqperc_last(mhru,4),
-     & lid_cumirr_last(mhru,4),lid_excum_last(mhru,4))    !!  nbs
+     & lid_cumirr_last(mhru,4),lid_excum_last(mhru,4),
+     & lid_str_curday(mhru,4),lid_qsurf_curday(mhru,4))	!!  nbs
 
 !!    Green Roof
       allocate(gr_onoff(msub,mudb),gr_imo(msub,mudb),gr_iyr(msub,mudb),
@@ -1760,7 +1786,7 @@
      & gr_fc(msub,mudb),gr_wp(msub,mudb),gr_ksat(msub,mudb),
      & gr_por(msub,mudb),gr_hydeff(msub,mudb),gr_soldpt(msub,mudb),
      & gr_dummy1(msub,mudb),gr_dummy2(msub,mudb),gr_dummy3(msub,mudb),
-     & gr_dummy4(msub,mudb),gr_dummy5(msub,mudb))
+     & gr_dummy4(msub,mudb),gr_dummy5(msub,mudb),nlid(msub))
 
 !!    Rain Garden
       allocate(rg_onoff(msub,mudb),rg_imo(msub,mudb),rg_iyr(msub,mudb),
@@ -1789,7 +1815,7 @@
      & pv_dummy5(msub,mudb))
       
 !!    LID general
-      allocate(lid_onoff(msub,mudb))
+      allocate(lid_onoff(msub,mudb),lid_lunam(msub,mudb))
       
       !! By Zhang for C/N cycling
       !! ============================

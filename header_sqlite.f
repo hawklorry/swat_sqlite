@@ -80,7 +80,11 @@
      &         "   BED_PSTmg"," BACTP_OUTct","BACTLP_OUTct",            
      &         "  CMETAL_1kg","  CMETAL_2kg","  CMETAL_3kg",
      &         "     TOT_Nkg","     TOT_Pkg"," NO3ConcMg_l",
-     &         "    WTMPdegc"/)
+     &         "    WTMPdegc","       Salt1","       Salt2",
+     &         "       Salt3","       Salt4","       Salt5",
+     &         "       Salt6","       Salt7","       Salt8",
+     &         "       Salt9","      Salt10","         SAR",
+     &         "        EC"/)
 
 !!    column headers for reach sediment output file
 !!    previous in readfile.f format 1080

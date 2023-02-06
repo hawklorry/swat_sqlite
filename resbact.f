@@ -55,7 +55,6 @@
 
       integer :: jres
       real*8 :: totbactp, totbactlp, netwtr
-      real*8 :: wtmp
 
       jres = 0
       jres = inum1
@@ -64,10 +63,9 @@
       !! Stefan and Preudhomme. 1993.  Stream temperature estimation
       !! from air temperature.  Water Res. Bull. p. 27-45
       !! SWAT manual equation 2.3.13
-      wtmp = 0.
-      wtmp = 5.0 + 0.75 * tmpav(jres)
+      call temparms
+      !wtmp = 5.0 + 0.75 * tmpav(jres)
       if (wtmp <= 0.) wtmp = 0.1
-
 
 !! daily mass balance
       !! total bacteria mass in reservoir

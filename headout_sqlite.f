@@ -60,9 +60,9 @@
       if(iprint == 0) datecol_num = 2    !!monthly
 
       !!get result file name based on output interval
-      if(iprint == 1) rfilename = "result_683_daily.db3";
-      if(iprint == 0) rfilename = "result_683_monthly.db3";
-      if(iprint == 2) rfilename = "result_683_yearly.db3";
+      if(iprint == 1) rfilename = "result_687_daily.db3";
+      if(iprint == 0) rfilename = "result_687_monthly.db3";
+      if(iprint == 2) rfilename = "result_687_yearly.db3";
       write(*,*) rfilename
 
       !!try to delete first

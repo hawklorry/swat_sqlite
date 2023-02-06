@@ -533,6 +533,7 @@
      & 'AUTOPkh ',t84,'MIXEF',t90,'PRECmm',t97,'SURQGENmm',t109,        
      & 'GWQmm',t118,'ETmm',t125,'SEDth ',t132,'NO3kgh ',t140,           
      & 'ORGNkgh ',t148,'BIOMth',t157,'YLDth',t164,'SURQmm')
+ !1900 format (i7,i4,3x,a16,3x,e8.3,17f10.2) 
  1900 format (i7,i4,3x,a8,3x,e8.3,17f8.2) 
  2000 format (///,t17,'AVE MONTHLY BASIN VALUES',/t20,'SNOW',t46,       
      &   'WATER',t66,'SED',/t3,'MON',t11,'RAIN',t20,'FALL',t27,'SURF Q',
@@ -564,7 +565,7 @@
      &        t15,'ET = ',f8.1,' MM'/                                   
      &        t15,'PET = ',f8.1,'MM'/                                   
      &        t15,'TRANSMISSION LOSSES = ',f8.2,' MM'/                
-     &        t15,'SEPTIC INFLOW = ',f10.2,' MM'/                       
+     &        t15,'SEPTIC INFLOW = ',f8.2,' MM'/                       
      &        t15,'TOTAL SEDIMENT LOADING =  ',f8.2,' T/HA')
  !    &        t15,'POND BUDGET'/                                        
  !    &        t20,'EVAPORATION = ',f8.3,' MM'/                          
@@ -595,7 +596,7 @@
      &    /,t20,'ORGANIC P =  ',f8.3,' (KG/HA)',/,t20,                  
      &    'NO3 YIELD (SQ) =  ',f8.3,' (KG/HA)',/,t20,                   
      &    'NO3 YIELD (LAT) = ',f8.3,' (KG/HA)',                         
-     &    /,t20,'NO3 YIELD (TILE) = ', f8.3,' (KG/HA)', 
+     &    /,t20,'NO3 YIELD (TILE) = ', f10.3,' (KG/HA)', 
      &    /,t20,'SOLP YIELD (TILE) = ', f8.3, '(KG/HA)',
      &    /,t20,'SOLP YIELD (SURF INLET RISER) = ', f8.3,
      &    ' (KG/HA)',     
@@ -615,7 +616,8 @@
      &    'HUMUS MIN ON ACTIVE ORG P = ',f8.3,' (KG/HA)',/,t20,         
      &    'MIN FROM FRESH ORG N = ',f8.3,' (KG/HA)',/,t20,              
      &    'MIN FROM FRESH ORG P = ',f8.3,' (KG/HA)')
- 3000 format (t20,'NO3 IN RAINFALL =  ',f8.3,' (KG/HA)',/,t20,          
+ !3000 format (t20,'NO3 IN RAINFALL =  ',f8.3,' (KG/HA)',/,t20, 
+ 3000 format (t20,'NO3 IN RAINFALL =  ',f10.3,' (KG/HA)',/,t20, 
      &    'INITIAL NO3 IN SOIL =  ',f10.3,' (KG/HA)',/,t20,             
      &    'FINAL NO3 IN SOIL =  ',f12.3,' (KG/HA)',/,t20,               
      &    'INITIAL ORG N IN SOIL =  ',f10.3,' (KG/HA)',/,t20,           

@@ -570,5 +570,5 @@
       call stdaa_sqlite_writebasin("END_YEAR",real(iyr - 1))
       call stdaa_sqlite_writebasin("OUTPUT_INTERVAL",real(iprint))
       call stdaa_sqlite_writebasin("SUCCESS",1.0)
-      call stdaa_sqlite_writebasin("VERSION",664.0)
+      call stdaa_sqlite_writebasin("VERSION",687.0)
       end
