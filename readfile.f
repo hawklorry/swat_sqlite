@@ -550,11 +550,12 @@
       end do
 
       if (ipdvar(1) <= 0) then
- !! change 42 to 45 for output.rch file gsm 10/30/2011     
-        do ii = 1, 46
+ !! change 42 to 45 for output.rch file gsm 10/30/2011  
+ !! change 46 to 56 for output.rch file salt - srini  
+        do ii = 1, 58     !! salty dog
           ipdvar(ii) = ii
         end do
-        itotr = 46
+        itotr = 58        !! salty dog
       end if
 
 
@@ -608,7 +609,7 @@
       if (ia_b == 1) then
         open (66666,file = "outputb.sub", form = 'unformatted')
       end if
-      open (7,file="output.rch",recl=800)
+      open (7,file="output.rch",recl=1500)
       open (8,file="output.rsv",recl=800)
       if (ia_b == 1) then
         open (77777,file = "outputb.rch", form = 'unformatted')
@@ -616,6 +617,12 @@
       
 !!    sediment routing output file
       open (84,file="output.sed",recl=800)
+      
+!! write headings to output file (output.sed)
+!      write (84,7000) prog, values(2), values(3), values(1), values(5), 
+!     &               values(6), values(7)
+!      write (84,7010) title
+     
 !! write headings to sediment outputfile (output.sed)
       write (84,1080)
 1080  format (t10,'RCH',t17,'GIS',t23,'MON',t31,'AREAkm2',               
@@ -775,4 +782,7 @@
  5100 format (20a4)
  5101 format (a80)
  5102 format (3a5,30a15)
+ 
+ !7000 format ('1',/t5,a80,t105,2(i2,'/'),i4,5x,2(i2,':'),i2)
+ !7010 format (/(t5,20a4))
       end

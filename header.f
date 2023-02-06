@@ -73,7 +73,8 @@
       
 !!  added headers TOTAL N/TOTALP/NO3 Concentration TO HEADING FOR OUTPUT.RCH GSM 10/26/2011
 !!    column headers for reach output file
-
+!! added salt header from 1-10 srini 2/4/2017
+!! added SAR and EC headers Katrin March 2017
       hedr = (/"  FLOW_INcms"," FLOW_OUTcms","     EVAPcms",            
      &         "    TLOSScms","  SED_INtons"," SED_OUTtons",            
      &         " SEDCONCmg/L","   ORGN_INkg","  ORGN_OUTkg",            
@@ -89,13 +90,18 @@
      &         "   BED_PSTmg"," BACTP_OUTct","BACTLP_OUTct",            
      &         "  CMETAL#1kg","  CMETAL#2kg","  CMETAL#3kg",            
      &         "     TOT Nkg","     TOT Pkg"," NO3ConcMg/l",            
-     &         "    WTMPdegc"/)
+     &         "    WTMPdegc","     Salt1  ","     Salt2  ",
+     &         "     Salt3  ","     Salt4  ","     Salt5  ",
+     &         "     Salt6  ","     Salt7  ","     Salt8  ",
+     &         "     Salt9  ","     Salt10  ","      SAR  ",
+     &         "        EC  "/)
      
 !!    numbers printed to VB interface reach output file 
       icolr = (/38,50,62,74,86,98,110,122,134,146,158,170,182,194,206,  
      &218,230,242,254,266,278,290,302,314,326,338,350,362,374,386,398,  
      &410,422,434,446,458,470,482,494,506,518,530,542,554,566,578,590,  
-     &602,614,626,638,650,662,674,686,698,710,722,734,746,758,770/)
+     &602,614,626,638,650,662,674,686,698,710,722,734,746,758,770,782,
+     &794,806,818,830,842,854,866,878,890,902,914,926,938/)
 
 !!    column headers for reservoir output file
       hedrsv = (/"    VOLUMEm3","  FLOW_INcms"," FLOW_OUTcms",          

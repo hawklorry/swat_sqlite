@@ -46,14 +46,21 @@
 !!    ~ ~ ~ ~ ~ ~ END SPECIFICATIONS ~ ~ ~ ~ ~ ~
 
       use parm
+      
       implicit none
-      prog = "SWAT Jan 5   VER 2022/Rev 683"
+      !prog = "SWAT Dec 1   VER 2022/Merge Rev 663/Rev 687"
+      prog = "SWAT Dec 19   VER 2022/Rev 687"
       write (*,1000)
  1000 format(1x,"               SWAT2022               ",/,             
-     &          "               Rev. 683               ",/,             
+     &          "               Rev. 687               ",/,             
      &          "      Soil & Water Assessment Tool    ",/,             
      &          "               PC Version             ",/,             
      &          " Program reading from file.cio . . . executing",/)
+     
+!! current working directory - for Chris G.
+
+      !call getcwd(cwd)
+      !write (*,*) trim(cwd)
 
 !! process input
 		
@@ -73,6 +80,11 @@
       call readfig
       call readatmodep
       call readinpt
+	if (ievent>0) then
+		do i=1,msub
+			call lidinit
+		end do
+	endif
       call std1
       call std2
       call openwth

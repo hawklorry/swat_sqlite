@@ -166,6 +166,7 @@
       sub_qd = 0.
       sub_sedpa = 0.
       sub_sedps = 0.
+      sub_salt = 0. !! salt Srini
 
       sub_sedy = 0.
 	sub_dsan = 0.
@@ -251,6 +252,9 @@
 	sub_rspc_d =0.
       !!add by zhang
       !!==========================
-	
+	lid_str_curday = 0. !lid storage initialization
+      lid_sw_add = 0.
+	lid_qsurf_curday = 0.
+
       return
       end
